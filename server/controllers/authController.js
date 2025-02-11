@@ -57,33 +57,22 @@ const registerUser = async (c) => {
     //if result is positive create TOKEN
     if(result){
         
- 
       const payload = {
         id: user[0].id,
+      };
+  
 
-      }
-    const token = await jwt.sign(payload, secret)
+        // create the token by signing the payload
+          const token = await jwt.sign(payload, secret);
 
-          setCookie(c, "auth", token, {
-          path: '/',
-         // secure: true,
-          //domain: 'example.com',
-          //httpOnly: true,
-          maxAge: 1000,
-          expires: new Date(Date.UTC(2000, 11, 24, 10, 30, 59, 900)),
-          //sameSite: 'Strict',
-        })
-
-
-      console.log(getCookie(c,"auth"));
-      
-        
-        
-       // user[0].totalAnswered= await userService.getTotalAnseredNumber(user[0].id);
-       // user[0].correctAnswered= await userService.getCorrectAnseredNumber(user[0].id);
-        
-        
-        return c.json({data:"ok"});
+          // set the token as the cookie value
+          setCookie(c, COOKIE_KEY, token, {
+            path: "/",
+            domain: "localhost",
+            httpOnly: true,
+            sameSite: "lax"
+          });
+         return c.json({"userName":user[0].id});
         
       }
 

@@ -22,7 +22,8 @@ if (Deno.env.get("JWT_SECRET")) {
 
 const io = new Server();
 const app = new Hono();
-app.use("/*", cors());
+app.use("/*", cors({
+  origin: 'http://localhost:5174', credentials: true,}));
 app.use("/*", logger());
 //app.use("/message/*", jwt({secret: secret, }));
 app.get("/", (c) => c.json({ message: "Hello world!2" }));

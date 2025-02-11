@@ -11,11 +11,11 @@ if (Deno.env.get("JWT_SECRET")) {
     secret = "temp";
   }
 
-const getMessages =  async (c) => {
-    console.log(c);
-    const body = await c.req.json();
-   // const token = getCookie(c, COOKIE_KEY);
-    console.log(body);
+const getMessages =   (c) => {
+
+    //const body = await c.req.json();
+    const token = getCookie(c, COOKIE_KEY);
+    console.log(token);
     //const jwtPayload = await jwt.verify(token, secret);
     
     //console.log(jwtPayload);

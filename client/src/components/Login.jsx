@@ -13,13 +13,11 @@ function Login() {
     e.preventDefault(); 
     const response = await login(emailInput, passwordInput)
   
-    if(response.data==="ok"){
-    console.log("working")
+    if(response.userName){
     setEmailInput("");
     setPasswordInput("");
     navigate("/chat");
-  
-  }
+    }
   };
 
   return (
