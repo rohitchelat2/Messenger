@@ -1,5 +1,6 @@
 import * as messageService from "../services/messageService.js"
 import * as userService from "../services/userService.js"
+
 import { getCookie } from  "@hono/hono/cookie";
 import * as jwt from "@hono/hono/jwt"
 let secret;
@@ -27,13 +28,21 @@ const getMessages = async (c) => {
 }
 
 const storeMessage = async (c) => {
-    const userId = c.get("jwtPayload");
+    console.log("Store message");
+    const token = getCookie(c, COOKIE_KEY);
+    console.log(token);
+    const jwtPayload = await jwt.verify(token, secret);
+
+    const userId = jwtPayload.id;
     const body = await c.req.json();
     const message = body.message;
-    const receiverId = body.receiverId;
-    const socketId = userService.getSocketId(receiverId);
-    await messageService.storeMessage(userId, receiverId, message);
-    return {response: "Message stored", socketId: socketId, "message":message};}
+    //const receiverId = body.receiverId;
+    //const socketId = userService.getSocketId(receiverId);
+    //await messageService.storeMessage(userId, receiverId, message);
+
+    return {response: "Message stored", 
+        //socketId: socketId,
+         "message":message};}
  
 export {getMessages,storeMessage}
 

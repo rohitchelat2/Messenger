@@ -2,6 +2,7 @@
 import  { useState, useEffect } from "react";
 import io from "socket.io-client";
 import {getMessages} from "../api/messageApi"
+
 //import { useNavigate } from "react-router-dom";
 
 const socket = io("http://localhost:8000",{
@@ -23,8 +24,8 @@ function Chat() {
   useEffect(() => {
 
    socket.connect();
-   function onRecieve(message) {
-      setMessages(previous => [...previous, message]);
+   function onRecieve(message, senderId) {
+      setMessages(previous => [...previous, message+" from "+senderId]);
     }
 
     socket.on("receiveMessage", onRecieve);
@@ -35,7 +36,8 @@ function Chat() {
   }, []);
 
   const sendMessage = () => {
-    socket.emit("sendMessage", input);
+    //sendMessage(input);
+    socket.emit("sendMessage", input, "senderId");
     setInput("");
   };
 

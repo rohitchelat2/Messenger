@@ -18,3 +18,14 @@ export const getMessages = async () => {
         throw error.response?.data || "Failed to fetch messages";
     }
 };
+
+
+
+export const sendMessage = async (input) => {
+    try {
+        const response = await API.post(`/message/send`, {message: input});
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || "Failed to fetch messages";
+    }
+};
