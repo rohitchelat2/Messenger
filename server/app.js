@@ -49,12 +49,11 @@ app.post("/api/login", authController.loginUser);
 app.get("/api/message/get", messageController.getMessages);
 app.post("/api/message/send", (c) => {
 
-  const {response , socketId} =  messageController.storeMessage(c);
+  const {response , socketId, message } =  messageController.storeMessage(c);
 
-  if (socketId) {
-    // Send message directly if user is online
-    io.to(socketId).emit("notification", { message });
-    
+  // Send message directly if user is online
+  if (socketId) {  
+    io.to(socketId).emit("notification", { message });  
   }
   return c.json(response);
 })
@@ -63,7 +62,4 @@ const handler = io.handler(async (req) => {
     return await app.fetch(req) || new Response(null, { status: 404 });
   });
 
-  Deno.serve({
-    handler,
-    port: 8000,
-  });
+  Deno.serve({ handler, port: 8000, });

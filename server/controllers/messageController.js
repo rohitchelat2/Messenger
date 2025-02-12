@@ -11,14 +11,14 @@ if (Deno.env.get("JWT_SECRET")) {
     secret = "temp";
   }
 
-const getMessages =   (c) => {
+const getMessages = async (c) => {
 
     //const body = await c.req.json();
     const token = getCookie(c, COOKIE_KEY);
     console.log(token);
-    //const jwtPayload = await jwt.verify(token, secret);
+    const jwtPayload = await jwt.verify(token, secret);
     
-    //console.log(jwtPayload);
+    console.log(jwtPayload.id);
 
     /*const userId = c.get("jwtPayload");
     const body = await c.req.json();
@@ -33,7 +33,7 @@ const storeMessage = async (c) => {
     const receiverId = body.receiverId;
     const socketId = userService.getSocketId(receiverId);
     await messageService.storeMessage(userId, receiverId, message);
-    return {response: "Message stored", socketId: socketId};}
+    return {response: "Message stored", socketId: socketId, "message":message};}
  
 export {getMessages,storeMessage}
 

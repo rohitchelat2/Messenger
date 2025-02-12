@@ -1,7 +1,7 @@
 import * as userService from "../services/userService.js"
 import {hash, verify } from "scrypt"
 import * as jwt from "@hono/hono/jwt"
-import { deleteCookie, getCookie, setCookie } from '@hono/hono/cookie';
+import { setCookie } from '@hono/hono/cookie';
 let secret;
 const COOKIE_KEY = "auth";
 
