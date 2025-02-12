@@ -2,11 +2,12 @@ import { Server } from "https://deno.land/x/socket_io@0.2.0/mod.ts";
 import { Hono } from "@hono/hono";
 import { cors } from "@hono/hono/cors";
 import { logger } from "@hono/hono/logger";
-//import { serve } from "https://deno.land/std/http/server.ts";
 import * as messageController from "./controllers/messageController.js"
 import * as authController from "./controllers/authController.js"
+import * as socketController from "./controllers/socketController.js"
 
 import { jwt } from "@hono/hono/jwt";
+import { socketConnection } from "./controllers/socketController.js";
 //const messages = [""];
 const users = new Map();
 
@@ -20,33 +21,27 @@ if (Deno.env.get("JWT_SECRET")) {
   }
 
 
-const io = new Server();
+const io = new Server( {
+  cors: {
+    origin: "http://localhost:5173", // Allow WebSocket connections from this origin
+    methods: ["GET", "POST"],
+    credentials: true, // Allow credentials (e.g., cookies)
+  },
+});
+
+
 const app = new Hono();
-app.use("/*", cors({
-  origin: 'http://localhost:5174', credentials: true,}));
+
+//middlewares
+app.use("/*", cors({origin: 'http://localhost:5173', credentials: true,}));
 app.use("/*", logger());
+
+
+
+//Controllers
 //app.use("/message/*", jwt({secret: secret, }));
 app.get("/", (c) => c.json({ message: "Hello world!2" }));
-
-
-// WebSocket Connection
-io.on("connection", (socket) => {
-    console.log(`User connected: ${socket.id}`);
-    const cookieHeader = socket.handshake.headers.cookie || "";
-    console.log(cookieHeader)
-
-
-    // Handle disconnection
-    socket.on("disconnect", () => {
-        for (const [userID, socketID] of users.entries()) {
-            if (socketID === socket.id) {
-                users.delete(userID);
-                console.log(`User ${userID} disconnected`);
-                break;
-            }
-        }
-    });
-});
+io.on("connection", socketController.socketConnection); // WebSocket Connection
 
 
 app.post("/api/register", authController.registerUser);

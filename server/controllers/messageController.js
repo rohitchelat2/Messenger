@@ -1,6 +1,6 @@
 import * as messageService from "../services/messageService.js"
 import * as userService from "../services/userService.js"
-import { getCookie } from "jsr:@hono/hono@4.6.5/cookie";
+import { getCookie } from  "@hono/hono/cookie";
 import * as jwt from "@hono/hono/jwt"
 let secret;
 const COOKIE_KEY = "auth";

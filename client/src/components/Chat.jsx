@@ -5,7 +5,9 @@ import {getMessages} from "../api/messageApi"
 //import { useNavigate } from "react-router-dom";
 
 const socket = io("http://localhost:8000",{
-  autoConnect: false,
+
+  withCredentials: true,
+  transports: ["websocket"],
 });
 
 /*function onLogin() {
