@@ -1,20 +1,9 @@
 // client/src/Chat.js
 import  { useState, useEffect } from "react";
-import io from "socket.io-client";
 import {getMessages} from "../api/messageApi"
+import {socket} from "./Socket"
 
-//import { useNavigate } from "react-router-dom";
 
-const socket = io("http://localhost:8000",{
-
-  withCredentials: true,
-  transports: ["websocket"],
-});
-
-/*function onLogin() {
-  socket.auth = "Token will come here" ;// For adding tocken
-  
-}*/
 
 function Chat() {
   const [messages, setMessages] = useState([]);
@@ -23,7 +12,7 @@ function Chat() {
 
   useEffect(() => {
 
-   socket.connect();
+   
    function onRecieve(message, senderId) {
       setMessages(previous => [...previous, message+" from "+senderId]);
     }

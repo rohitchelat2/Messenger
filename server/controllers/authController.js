@@ -1,7 +1,7 @@
 import * as userService from "../services/userService.js"
 import {hash, verify } from "scrypt"
 import * as jwt from "@hono/hono/jwt"
-import { setCookie } from '@hono/hono/cookie';
+import { deleteCookie, setCookie } from '@hono/hono/cookie';
 let secret;
 const COOKIE_KEY = "auth";
 
@@ -96,4 +96,10 @@ const checkUser = async (c) =>{
      return c.json(updatedUser[0])
 }
 
-  export {registerUser, loginUser,  checkUser}
+const logoutUser =  (c) => {
+  deleteCookie(c, COOKIE_KEY);
+  c.status(200);
+  return c.json({ data: "Logged out" });
+}
+
+  export {registerUser, loginUser,  checkUser, logoutUser}

@@ -49,7 +49,7 @@ const setupSocket = () => {
       // Handle disconnection
       socket.on("disconnect", () => {
         //Delete the socket from the database;
-       console.log(`User ${userID} disconnected`);
+       console.log(`User ${socket.id} disconnected`);
               
     });
 })};

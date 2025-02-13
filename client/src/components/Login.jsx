@@ -2,6 +2,7 @@
 import  { useState } from "react";
 import {login} from "../api/userApi"
 import { useNavigate } from "react-router-dom";
+import {socket} from "./Socket"
 
 function Login() {
   const [emailInput, setEmailInput] = useState("");
@@ -14,6 +15,7 @@ function Login() {
     const response = await login(emailInput, passwordInput)
   
     if(response.userName){
+    socket.connect();
     setEmailInput("");
     setPasswordInput("");
     navigate("/chat");

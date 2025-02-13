@@ -25,13 +25,12 @@ app.use("/*", logger());
 app.use("/api/message/*", jwt({secret: secret, }));
 
 
-
-
 //Controllers
 
 app.get("/", (c) => c.json({ message: "Server working" }));
 app.post("/api/register", authController.registerUser);
 app.post("/api/login", authController.loginUser);
+app.get("/api/logout", authController.logoutUser);
 app.get("/api/message/get", messageController.getMessages);
 
 setupSocket(); //setup socket connection
