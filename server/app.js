@@ -23,7 +23,7 @@ const app = new Hono();
 //middlewares
 app.use("/*", cors({origin: 'http://localhost:5173', credentials: true,}));
 app.use("/*", logger());
-app.use("/api/message/*", jwt({secret: secret, }));
+//app.use("/api/message/*", jwt({secret: secret, }));
 
 
 //Controllers

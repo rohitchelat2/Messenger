@@ -1,5 +1,5 @@
 //import { useState } from 'react'
-import Chat from './components/Chat'
+import Dashboard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
 
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat" element={<Dashboard />} />
         <Route path="/" element={<Login />} /> {/* Default route */}
       </Routes>
     </Router>

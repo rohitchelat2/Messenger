@@ -6,38 +6,26 @@ import Contacts from "./Contacts";
 
 
 
-function Chat() {
+function Chat({connectID, connectName}) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   //const navigate = useNavigate();
 
   useEffect(() => {
 
-   
-   function onRecieve(message, senderId) {
-      setMessages(previous => [...previous, message+" from "+senderId]);
-    }
 
-    socket.on("receiveMessage", onRecieve);
-    return () => {
-      socket.off("receiveMessage", onRecieve);
-    
-  };
   }, []);
 
   const sendMessage = () => {
     //sendMessage(input);
-    socket.emit("sendMessage", input, "senderId");
+    socket.emit("sendMessage", input, connectID);
     setInput("");
   };
 
-  const selectContact = (e) => {
-    e.preventDefault();
-  }
 
   return (
     <div>
-      <Contacts selectContact={selectContact} />
+    
       <div>
         {messages.map((msg, index) => (
           <div key={index}>{msg}</div>
@@ -48,7 +36,7 @@ function Chat() {
         onChange={(e) => setInput(e.target.value)}
       />
       <button onClick={sendMessage}>Send</button>
-      <button onClick={getMessages}>Get Messages</button>
+
     </div>
   );
 }
