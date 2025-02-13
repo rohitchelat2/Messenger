@@ -1,7 +1,8 @@
 // client/src/Chat.js
 import  { useState, useEffect } from "react";
 import {getMessages} from "../api/messageApi"
-import {socket} from "./Socket"
+import {socket} from "../Socket"
+import Contacts from "./Contacts";
 
 
 
@@ -30,8 +31,13 @@ function Chat() {
     setInput("");
   };
 
+  const selectContact = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <div>
+      <Contacts selectContact={selectContact} />
       <div>
         {messages.map((msg, index) => (
           <div key={index}>{msg}</div>

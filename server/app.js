@@ -4,6 +4,7 @@ import { cors } from "@hono/hono/cors";
 import { logger } from "@hono/hono/logger";
 import * as messageController from "./controllers/messageController.js"
 import * as authController from "./controllers/authController.js"
+import * as contactController from "./controllers/contactController.js"
 import {io, setupSocket} from "./socket.js"
 import { jwt } from "@hono/hono/jwt";
 let secret;;
@@ -32,6 +33,8 @@ app.post("/api/register", authController.registerUser);
 app.post("/api/login", authController.loginUser);
 app.get("/api/logout", authController.logoutUser);
 app.get("/api/message/get", messageController.getMessages);
+app.get("/api/contact/get", contactController.getContacts);
+
 
 setupSocket(); //setup socket connection
 

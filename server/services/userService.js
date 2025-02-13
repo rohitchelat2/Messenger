@@ -16,6 +16,9 @@ const createUser = async (user) => {
   };
   
 
+  const getAllUsers = async () => {
+    return await sql`SELECT id, email FROM users`
+  };
 
    
-  export { createUser, findUserByEmail, findUserById   };
+  export { createUser, findUserByEmail, findUserById,getAllUsers   };

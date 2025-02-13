@@ -1,7 +1,7 @@
 CREATE TABLE users (
   id CHAR(36) PRIMARY KEY,
   email VARCHAR(255) UNIQUE,
-  name VARCHAR(255),
+  username VARCHAR(255),
   password CHAR(128),
   socket_id CHAR(20) UNIQUE
 );

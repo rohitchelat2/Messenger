@@ -2,7 +2,7 @@
 import  { useState } from "react";
 import {login} from "../api/userApi"
 import { useNavigate } from "react-router-dom";
-import {socket} from "./Socket"
+import {socket} from "../Socket"
 
 function Login() {
   const [emailInput, setEmailInput] = useState("");

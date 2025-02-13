@@ -1,14 +1,4 @@
-import axios from "axios";
-
-
-const API_URL = import.meta.env.VITE_API_URL; 
-
-
-const API = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
-});
-
+import API from "./api";
 
 export const getMessages = async () => {
     try {
@@ -18,6 +8,8 @@ export const getMessages = async () => {
         throw error.response?.data || "Failed to fetch messages";
     }
 };
+
+
 
 
 
