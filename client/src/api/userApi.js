@@ -9,10 +9,10 @@ export const API = axios.create({
     withCredentials: true,
 });
 
-export const login = async (email, password) => {
-   console.log(email,password)
+export const login = async (email, username, password) => {
+
     try {
-        const response = await API.post(`/login`, { email, password });
+        const response = await API.post(`/login`, { email, username, password });
         console.log(response)
         //localStorage.setItem("token", response.data.token); // Save token
         return response.data;

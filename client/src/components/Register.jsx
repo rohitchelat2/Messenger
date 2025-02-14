@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [emailInput, setEmailInput] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [rePasswordInput, setRePasswordInput] = useState("");
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Register() {
     e.preventDefault(); 
     if(passwordInput===rePasswordInput){
     
-    const response = register(emailInput, passwordInput)
+    const response = register(emailInput, usernameInput, passwordInput)
 
     if(response==="ok")
     setEmailInput("");
@@ -29,6 +30,7 @@ function Register() {
   return (
     <div>
       <input type="text" value={emailInput}  onChange={(e) => setEmailInput(e.target.value)}  />
+      <input type="text" value={usernameInput}  onChange={(e) => setUsernameInput(e.target.value)}  />
       <input type="password" value={passwordInput}  onChange={(e) => setPasswordInput(e.target.value)}  />
       <input type="password" value={rePasswordInput}  onChange={(e) => setRePasswordInput(e.target.value)}  />
 

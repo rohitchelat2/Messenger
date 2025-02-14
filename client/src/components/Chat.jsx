@@ -1,31 +1,35 @@
 // client/src/Chat.js
 import  { useState, useEffect } from "react";
-import {getMessages} from "../api/messageApi"
+import PropTypes from 'prop-types';
+//import {getMessages} from "../api/messageApi"
 import {socket} from "../Socket"
-import Contacts from "./Contacts";
+//import Contacts from "./Contacts";
 
 
 
-function Chat({connectID, connectName}) {
+function Chat({selectedContact}) {
   const [messages, setMessages] = useState([]);
+  const [name, setName] = useState("");
+
   const [input, setInput] = useState("");
   //const navigate = useNavigate();
 
   useEffect(() => {
-
+    setName(selectedContact.username);
+    setMessages(selectedContact.messages);
 
   }, []);
 
   const sendMessage = () => {
     //sendMessage(input);
-    socket.emit("sendMessage", input, connectID);
+    socket.emit("sendMessage", input, selectedContact.id);
     setInput("");
   };
 
 
   return (
     <div>
-    
+    {name}
       <div>
         {messages.map((msg, index) => (
           <div key={index}>{msg}</div>
@@ -40,5 +44,14 @@ function Chat({connectID, connectName}) {
     </div>
   );
 }
+
+Chat.propTypes = {
+  selectedContact: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+    id: PropTypes.string.isRequired
+  }).isRequired
+};
+
 
 export default Chat;

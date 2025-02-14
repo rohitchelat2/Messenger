@@ -1,30 +1,17 @@
 // client/src/Chat.js
-import  { useState, useEffect } from "react";
-//import PropTypes from 'prop-types';
-import {getContacts} from "../api/contactApi"
+//import  { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 
 
 
 
-function Contacts({selectContact}) {
-  const [contacts, setContacts] = useState([]);
-  //const [input, setInput] = useState("");
-  //const navigate = useNavigate();
 
-  useEffect(() => {
-
-    getContacts().then((data) => {
-      setContacts(data);
-    });
-  }, []);
-
-
-
+function Contacts({contacts, selectContact}) {
   return (
 
       <div>
         {contacts.map((contact, index) => (
-          <div key={index} id={contact.id} onClick={selectContact(contact.id,contact.email)}> {contact.email}</div>
+          <div key={index} id={contact.id} onClick={selectContact(contact.id)}> {contact.email}</div>
         ))}
       </div>
       
@@ -32,5 +19,10 @@ function Contacts({selectContact}) {
   );
 }
 
+
+Contacts.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  selectContact: PropTypes.func.isRequired,
+};
 
 export default Contacts;

@@ -17,7 +17,7 @@ const registerUser = async (c) => {
     console.log(body.password,body.email)
    
 
-    if (!body.password||!body.email||body.password.length<8) {
+    if (!body.password||!body.email||!body.username||body.password.length<8) {
       c.status(409)
       return c.json({error: "Minimum requirement not fullfilled"});
     }
@@ -32,6 +32,7 @@ const registerUser = async (c) => {
     const user = {
         id: crypto.randomUUID(),
         email: body.email,
+        username: body.username,
         passwordHash: hash(body.password),
       };
     
@@ -72,7 +73,7 @@ const registerUser = async (c) => {
             httpOnly: true,
             sameSite: "lax"
           });
-         return c.json({"userName":user[0].id});
+         return c.json({"username":user[0].username, "userID":user[0].id});
         
       }
 
