@@ -9,18 +9,22 @@ import {getContacts} from "../api/contactApi"
 
 function Dashboard() {
   const [contacts, setContacts] = useState([]);
-  const [selectedContact, setSelectedContact] = useState([]);
+  const [selectedContact, setSelectedContact] = useState(null);
   
   useEffect(() => {
 
-    socket.connect();
+
     getContacts().then((data) => {
+      
       setContacts(data);
     });
+
+    socket.connect();
+    
    
     
     //getMessages("userID",connectID).then((data) => {setMessages(data)});
-   
+    const onRecieve = (packet) => { console.log(packet); };
     
      socket.on("receiveMessage", onRecieve);
      return () => {
@@ -31,11 +35,12 @@ function Dashboard() {
   }, []);
 
 
-  const onRecieve = (packet) => { console.log(packet); };
+  
 
 
-  const selectContact = (id) => {
-    const contact = contacts.find((contact) => contact.id === id);
+  const selectContact = (e) => {
+    const contact = contacts.find((contact) => contact.id === e.target.id);
+    console.log(contact);
     setSelectedContact(contact)
 
   }
@@ -43,7 +48,8 @@ function Dashboard() {
   return (
     <div>
       <Contacts contacts={contacts} selectContact={selectContact} />
-      <Chat selectedContact={selectedContact}/>
+      {selectedContact &&
+      <Chat selectedContact={selectedContact}/>}
     </div>
   );
 }

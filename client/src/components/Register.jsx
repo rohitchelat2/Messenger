@@ -11,17 +11,17 @@ function Register() {
   const navigate = useNavigate();
 
 
-  const sendLoginDetails = (e) => {
+  const sendLoginDetails = async (e) => {
     e.preventDefault(); 
     if(passwordInput===rePasswordInput){
     
-    const response = register(emailInput, usernameInput, passwordInput)
-
-    if(response==="ok")
+    const response = await register(emailInput, usernameInput, passwordInput)
+      console.log(response.data)
+    if(response.data==="ok"){
     setEmailInput("");
     setPasswordInput("");
     setRePasswordInput("");
-    navigate("/login");
+    navigate("/login");}
   }
     else{console.log("Password dosen't match")}
 

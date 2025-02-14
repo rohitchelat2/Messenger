@@ -18,7 +18,7 @@ function Chat({selectedContact}) {
     setName(selectedContact.username);
     setMessages(selectedContact.messages);
 
-  }, []);
+  }, [selectedContact]);
 
   const sendMessage = () => {
     //sendMessage(input);
@@ -30,11 +30,12 @@ function Chat({selectedContact}) {
   return (
     <div>
     {name}
+      {messages.length>0 &&
       <div>
         {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
+          <div key={index}>{msg.message} from {msg.sender_id}</div>
         ))}
-      </div>
+      </div>}
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -48,7 +49,7 @@ function Chat({selectedContact}) {
 Chat.propTypes = {
   selectedContact: PropTypes.shape({
     username: PropTypes.string.isRequired,
-    messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
     id: PropTypes.string.isRequired
   }).isRequired
 };

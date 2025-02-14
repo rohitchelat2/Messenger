@@ -1,7 +1,8 @@
 //import * as messageService from "../services/messageService.js"
-//import * as userService from "../services/userService.js"
+import * as userService from "./services/userService.js"
 import { Server } from "https://deno.land/x/socket_io@0.2.0/mod.ts";
 import * as jwt from "@hono/hono/jwt"
+import * as messageController from "./controllers/messageController.js"
 let secret;
 const COOKIE_KEY = "auth";
 
@@ -32,15 +33,20 @@ const setupSocket = () => {
     const cookies = Object.fromEntries( cookieHeader.split("; ").map((c) => c.split("="))   );
     const token = cookies[COOKIE_KEY];
     const jwtPayload = await jwt.verify(token, secret);
-    console.log(jwtPayload.id);
-   
+    const senderID = jwtPayload.id;
+    await userService.updateSocket(senderID, socket.id);
     console.log(`User connected: ${socket.id}`);
-    //add socket to database
+    
     
         // Listen for new messages
-    socket.on("sendMessage", (msg) => {
-          console.log(`User ${socket.id} sent message: ${msg}`);
-          io.emit("receiveMessage", msg, socket.id); // Broadcast to all clients
+    socket.on("sendMessage", async (message, recieverID) => {
+          console.log(`User ${senderID} sent message:${message} to ${recieverID} `);
+          const response = await messageController.storeMessage(senderID, recieverID, message);
+          console.log(response);
+          if(response.recieverSocket)
+            {
+                      io.to(recieverSocket).emit("receiveMessage", senderID, message);}
+          //io.emit("receiveMessage", message, socket.id); // Broadcast to all clients
     });
   
  

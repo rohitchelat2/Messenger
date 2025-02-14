@@ -11,7 +11,7 @@ function Contacts({contacts, selectContact}) {
 
       <div>
         {contacts.map((contact, index) => (
-          <div key={index} id={contact.id} onClick={selectContact(contact.id)}> {contact.email}</div>
+          <div key={index} id={contact.id} onClick={selectContact}> {contact.username}</div>
         ))}
       </div>
       

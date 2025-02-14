@@ -1,5 +1,6 @@
 
 import * as userService from "../services/userService.js"
+import * as messageService from "../services/messageService.js"
 import { getCookie } from  "@hono/hono/cookie";
 import * as jwt from "@hono/hono/jwt"
 let secret;
@@ -18,9 +19,14 @@ const getContacts = async (c) => {
     
     const userID = jwtPayload.id;
 
-    const contacts = await userService.getAllUsers();
-    contacts.forEach(async (contact) => { contact.messages= await messageService.getMessages(userID, contact.id) });
-    
+    const result = await userService.getAllUsers();
+    const contacts = await Promise.all(
+      result.map(async (contact) => {
+          contact.messages = await messageService.getMessages(userID, contact.id);
+          return contact; // 
+      })
+  );
+   
     return c.json(contacts);
 }
 

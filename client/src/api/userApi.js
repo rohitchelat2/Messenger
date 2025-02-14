@@ -9,10 +9,10 @@ export const API = axios.create({
     withCredentials: true,
 });
 
-export const login = async (email, username, password) => {
+export const login = async (email, password) => {
 
     try {
-        const response = await API.post(`/login`, { email, username, password });
+        const response = await API.post(`/login`, { email, password });
         console.log(response)
         //localStorage.setItem("token", response.data.token); // Save token
         return response.data;
@@ -23,10 +23,10 @@ export const login = async (email, username, password) => {
 
 };
 
-export const register = async (email, password) => {
+export const register = async (email, username, password) => {
     console.log(email,password)
      try {
-         const response = await API.post(`/register`, { email, password });
+         const response = await API.post(`/register`, { email, username,password });
          console.log(response.data)
          return response.data;
      } catch (error) {

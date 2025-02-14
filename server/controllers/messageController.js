@@ -27,22 +27,19 @@ const getMessages = async (c) => {
     return c.json({response: "Messages fetched"});
 }
 
-const storeMessage = async (c) => {
-    console.log("Store message");
-    const token = getCookie(c, COOKIE_KEY);
-    console.log(token);
-    const jwtPayload = await jwt.verify(token, secret);
+const storeMessage = async (senderID,receiverId, message) => {
+   
 
-    const userId = jwtPayload.id;
-    const body = await c.req.json();
-    const message = body.message;
-    //const receiverId = body.receiverId;
-    //const socketId = userService.getSocketId(receiverId);
-    //await messageService.storeMessage(userId, receiverId, message);
+        const messagePack = {
+            id: crypto.randomUUID(),
+            senderID: senderID,
+            receiverId: receiverId,
+            message: message,
+          };
 
-    return {response: "Message stored", 
-        //socketId: socketId,
-         "message":message};}
+    await messageService.storeMessage(messagePack);
+    const recieverSocket = await userService.getSocket(receiverId);
+    return {status: "ok", recieverSocket };}
  
 export {getMessages,storeMessage}
 

@@ -14,8 +14,9 @@ function Login() {
     e.preventDefault(); 
     const response = await login(emailInput, passwordInput)
   
-    if(response.userName){
-    
+    if(response.username){
+    localStorage.setItem("userID", response.userID);
+    localStorage.setItem("userName", response.username);
     setEmailInput("");
     setPasswordInput("");
     navigate("/chat");
