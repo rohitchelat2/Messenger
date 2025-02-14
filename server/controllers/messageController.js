@@ -37,9 +37,9 @@ const storeMessage = async (senderID,receiverId, message) => {
             message: message,
           };
 
-    await messageService.storeMessage(messagePack);
+    const result = await messageService.storeMessage(messagePack);
     const recieverSocket = await userService.getSocket(receiverId);
-    return {messagePack, recieverSocket };}
+    return {result, recieverSocket };}
  
 export {getMessages,storeMessage}
 

@@ -15,31 +15,44 @@ function Dashboard() {
 
 
     getContacts().then((data) => {
-      
       setContacts(data);
     });
-
     socket.connect();
-    
-   
-    
-    //getMessages("userID",connectID).then((data) => {setMessages(data)});
-    const onRecieve = (data) => { 
-      console.log(data.messagePack);
-      const contact = contacts.find((contact) => contact.id === data.messagePack.sender_id);
-      if(contact){
-        contact.messages.push(data.messagePack);
-        setContacts([...contacts]);
-      }
+  
+  }, []);
+
+  useEffect(() => {console.log(contacts) }, [contacts]);
+
+  
+ 
+  useEffect(() => {
+
+
+    const onRecieve = (newMessage) => { 
+      console.log(contacts);
+  
+      setContacts(contacts.map(c => 
+        c.id === newMessage.messagePack.sender_id 
+            ? { ...c, messages: [...c.messages, newMessage.messagePack] } 
+            : c));
+            if(selectedContact.id === newMessage.messagePack.sender_id)
+              {
+                setSelectedContact({...selectedContact, messages: [...selectedContact.messages, newMessage.messagePack] });
+            
+              };
+          
+  
     };
-    
+
+
+
      socket.on("receiveMessage", onRecieve);
      return () => {
-      socket.off("receiveMessage");
+      socket.off("receiveMessage", onRecieve);
      
    };
   
-  }, []);
+  }, [contacts, selectedContact]);
 
 
   
