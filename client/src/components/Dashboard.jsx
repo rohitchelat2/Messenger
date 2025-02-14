@@ -24,11 +24,18 @@ function Dashboard() {
    
     
     //getMessages("userID",connectID).then((data) => {setMessages(data)});
-    const onRecieve = (packet) => { console.log(packet); };
+    const onRecieve = (data) => { 
+      console.log(data.messagePack);
+      const contact = contacts.find((contact) => contact.id === data.messagePack.sender_id);
+      if(contact){
+        contact.messages.push(data.messagePack);
+        setContacts([...contacts]);
+      }
+    };
     
      socket.on("receiveMessage", onRecieve);
      return () => {
-      socket.off("receiveMessage", onRecieve);
+      socket.off("receiveMessage");
      
    };
   

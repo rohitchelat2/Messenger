@@ -32,14 +32,14 @@ const storeMessage = async (senderID,receiverId, message) => {
 
         const messagePack = {
             id: crypto.randomUUID(),
-            senderID: senderID,
-            receiverId: receiverId,
+            sender_id: senderID,
+            receiver_id: receiverId,
             message: message,
           };
 
     await messageService.storeMessage(messagePack);
     const recieverSocket = await userService.getSocket(receiverId);
-    return {status: "ok", recieverSocket };}
+    return {messagePack, recieverSocket };}
  
 export {getMessages,storeMessage}
 

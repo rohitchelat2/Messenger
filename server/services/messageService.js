@@ -6,7 +6,7 @@ const getMessages = async (userID, ContactID) => {
 }
 
 const storeMessage = async (messagePack) => {
-  await sql`INSERT INTO messages (id, sender_id, receiver_id, message) VALUES (${messagePack.id}, ${messagePack.senderID}, ${messagePack.receiverId}, ${messagePack.message})`
+  await sql`INSERT INTO messages (id, sender_id, receiver_id, message) VALUES (${messagePack.id}, ${messagePack.sender_id}, ${messagePack.receiver_id}, ${messagePack.message})`
 }
 
   

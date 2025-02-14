@@ -43,9 +43,10 @@ const setupSocket = () => {
           console.log(`User ${senderID} sent message:${message} to ${recieverID} `);
           const response = await messageController.storeMessage(senderID, recieverID, message);
           console.log(response);
+          const messagePack = response.messagePack;
           if(response.recieverSocket)
             {
-                      io.to(recieverSocket).emit("receiveMessage", senderID, message);}
+                      io.to(response.recieverSocket).emit("receiveMessage", {messagePack});}
           //io.emit("receiveMessage", message, socket.id); // Broadcast to all clients
     });
   
