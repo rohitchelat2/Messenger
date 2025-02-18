@@ -14,7 +14,7 @@ if (Deno.env.get("JWT_SECRET")) {
 const registerUser = async (c) => {
 
     const body = await c.req.json();
-    console.log(body.email, body.username, body.password)
+    //console.log(body.email, body.username, body.password)
    
 
     if (!body.password||!body.email||!body.username||body.password.length<8) {

@@ -2,6 +2,8 @@
 import Dashboard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 import './App.css'
 

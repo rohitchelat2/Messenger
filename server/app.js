@@ -32,7 +32,7 @@ app.get("/", (c) => c.json({ message: "Server working" }));
 app.post("/api/register", authController.registerUser);
 app.post("/api/login", authController.loginUser);
 app.get("/api/logout", authController.logoutUser);
-app.get("/api/message/get", messageController.getMessages);
+//app.get("/api/message/get", messageController.getMessages);
 app.get("/api/contact/get", contactController.getContacts);
 
 

@@ -7,6 +7,10 @@ import  { useState, useEffect } from "react";
 import Chat from "./Chat";
 import {getContacts} from "../api/contactApi"
 
+//CSS imports
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 function Dashboard() {
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
@@ -29,13 +33,13 @@ function Dashboard() {
 
 
     const onRecieve = (newMessage) => { 
-      console.log(contacts);
+      console.log(newMessage);
   
       setContacts(contacts.map(c => 
-        c.id === newMessage.messagePack.sender_id 
+        c.id === newMessage.messagePack.sender
             ? { ...c, messages: [...c.messages, newMessage.messagePack] } 
             : c));
-            if(selectedContact.id === newMessage.messagePack.sender_id)
+            if(selectedContact.id === newMessage.messagePack.sender)
               {
                 setSelectedContact({...selectedContact, messages: [...selectedContact.messages, newMessage.messagePack] });
             
@@ -67,9 +71,15 @@ function Dashboard() {
 
   return (
     <div>
-      <Contacts contacts={contacts} selectContact={selectContact} />
-      {selectedContact &&
-      <Chat selectedContact={selectedContact}/>}
+      <Row>
+        <Col>
+            <Contacts contacts={contacts} selectContact={selectContact} />
+        </Col>
+        <Col>
+            {selectedContact &&  
+            <Chat selectedContact={selectedContact}/>}
+        </Col>
+      </Row>
     </div>
   );
 }

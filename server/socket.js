@@ -35,19 +35,19 @@ const setupSocket = () => {
     const jwtPayload = await jwt.verify(token, secret);
     const senderID = jwtPayload.id;
     await userService.updateSocket(senderID, socket.id);
-    console.log(`User connected: ${socket.id}`);
+    //console.log(`User connected: ${socket.id}`);
     
     
         // Listen for new messages
     socket.on("sendMessage", async (message, recieverID) => {
-          console.log(`User ${senderID} sent message:${message} to ${recieverID} `);
+    
           const response = await messageController.storeMessage(senderID, recieverID, message);
-          console.log(response);
-          const messagePack = response.messagePack;
+          
+          const messagePack = response.result;
           if(response.recieverSocket)
             {
                       io.to(response.recieverSocket).emit("receiveMessage", {messagePack});}
-          //io.emit("receiveMessage", message, socket.id); // Broadcast to all clients
+        
     });
   
  

@@ -7,6 +7,7 @@ import {socket} from "../Socket"
 
 
 
+
 function Chat({selectedContact}) {
   const [messages, setMessages] = useState([]);
   const [name, setName] = useState("");
@@ -29,11 +30,12 @@ function Chat({selectedContact}) {
 
   return (
     <div>
+    
     {name}
       {messages.length>0 &&
       <div>
         {messages.map((msg, index) => (
-          <div key={index}>{msg.message} from {msg.sender_id}</div>
+          <div key={index}>{msg.message} from {msg.sender}</div>
         ))}
       </div>}
       <input
