@@ -3,7 +3,7 @@ import Dashboard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Container from 'react-bootstrap/Container';
 
 import './App.css'
 
@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
+    <Container fluid>
     <Router>
       <Routes>
         <Route path="/register" element={<Register />} />
@@ -20,7 +21,7 @@ function App() {
         <Route path="/chat" element={<Dashboard />} />
         <Route path="/" element={<Login />} /> {/* Default route */}
       </Routes>
-    </Router>
+    </Router></Container>
   );
 }
 

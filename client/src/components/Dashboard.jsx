@@ -10,6 +10,7 @@ import {getContacts} from "../api/contactApi"
 //CSS imports
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 
 function Dashboard() {
   const [contacts, setContacts] = useState([]);
@@ -70,17 +71,17 @@ function Dashboard() {
   }
 
   return (
-    <div>
+    <Container fluid>
       <Row>
-        <Col>
+        <Col sm={4}>
             <Contacts contacts={contacts} selectContact={selectContact} />
         </Col>
-        <Col>
+        <Col sm={8}>
             {selectedContact &&  
             <Chat selectedContact={selectedContact}/>}
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 }
 
