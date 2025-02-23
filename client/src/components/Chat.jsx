@@ -38,11 +38,12 @@ function Chat({selectedContact}) {
           <div key={index}>{msg.message} from {msg.sender}</div>
         ))}
       </div>}
-      <input
+      <div className="chat-input-container">
+      <input className="chat-input"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <button onClick={sendMessage}>Send</button>
+      <button className="chat-input-button" onClick={sendMessage}>Send</button></div>
 
     </div>
   );

@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <Container fluid>
+    <Container >
     <Router>
       <Routes>
         <Route path="/register" element={<Register />} />
