@@ -9,7 +9,7 @@
 .chat-input-container{
   width: 100%;
   margin: 5px;
-  border: 1px solid #ccc;
+  
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
 
@@ -18,17 +18,31 @@
 
 
 .chat-input{
-  width: 85%;
+  width: 90%;
   padding: 0.5rem;
-  border: 1px solid #ccc;
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
+  background-color: #fff;
+  border: 2px solid #353535;
+  border-right: none;
+  color: #000;
+
+}
+
+.chat-input:focus{
+  border: 3px solid #ff0073;
+  border-right: none;
 
 }
 .chat-input-button{
-  width: 15%;
+  width: 10%;
   padding: 0.5rem;
-  border: 1px solid #ccc;
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
+  background-color: #fff;
+  border: 2px solid #353535;
+  border-left: none;
+  color: #000;
+
+
 }
