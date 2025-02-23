@@ -39,11 +39,12 @@ function Chat({selectedContact}) {
         ))}
       </div>}
       <div className="chat-input-container">
-      <input className="chat-input"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button className="chat-input-button" onClick={sendMessage}>Send</button></div>
+        <input className="chat-input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button className="chat-input-button" onClick={sendMessage}>&#x2794;</button>
+      </div>
 
     </div>
   );
