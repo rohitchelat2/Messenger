@@ -32,22 +32,18 @@ function Dashboard() {
   
  
   useEffect(() => {
-
-
     const onRecieve = (newMessage) => { 
-      console.log(newMessage);
-  
+   
       setContacts(contacts.map(c => 
         c.id === newMessage.messagePack.sender
             ? { ...c, messages: [...c.messages, newMessage.messagePack] } 
             : c));
             if(selectedContact.id === newMessage.messagePack.sender)
               {
-                setSelectedContact({...selectedContact, messages: [...selectedContact.messages, newMessage.messagePack] });
+                setSelectedContact({...selectedContact, messages: [ newMessage.messagePack, ...selectedContact.messages] });
             
               };
-          
-  
+    
     };
 
 

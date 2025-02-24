@@ -21,32 +21,39 @@ function Chat({selectedContact}) {
     setMessages(selectedContact.messages);
 
   }, [selectedContact]);
-
+  
   const sendMessage = () => {
+    const cleanedInput = input.trim();
     //sendMessage(input);
-    socket.emit("sendMessage", input, selectedContact.id);
+    if(cleanedInput !== "" )
+    {
+      socket.emit("sendMessage",cleanedInput , selectedContact.id);
+      const newMessage = {message: cleanedInput, sender: userID, receiver: selectedContact.id, time: new Date().toISOString(), id: Math.random().toString()};
+      console.log(newMessage
+      );
+      setMessages([newMessage, ...messages]);
+      
     setInput("");
+    }
+    
   };
 
 
   return (
     <div>
     
-    {name} {selectedContact.id} {userID}
-
-
       <div className="chat-container">
+      <div className="chat-header">{name}</div>
       {messages.length>0 &&
       <div className="messages-container">
         {messages.map((msg, index) => (
-          <div className={selectedContact.id===msg.sender?"message messages-container-right":"message"} key={index}>{msg.message}</div>
+          <div className={userID===msg.sender?"message messages-container-right":"message"} key={index}>{msg.message}
+          <div className="message-time">{new Date(msg.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</div>
+          </div>
         ))}
       </div>}
       <div className="chat-input-container">
-        <input className="chat-input" required
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
+        <input className="chat-input" value={input}  onChange={(e) => setInput(e.target.value)}  />
         <button className="chat-input-button" onClick={sendMessage}>&#x2794;</button>
       </div>
 

@@ -1,7 +1,7 @@
 import {sql} from "../database/database.js"
 
 const getMessages = async (userID, ContactID) => {
-  const messages = await  sql`SELECT id, sender_id AS sender , receiver_id as receiver, message, time FROM messages WHERE (sender_id = ${userID} AND receiver_id = ${ContactID}) OR (sender_id = ${ContactID} AND receiver_id = ${userID}) ORDER BY time`
+  const messages = await  sql`SELECT id, sender_id AS sender , receiver_id as receiver, message, time FROM messages WHERE (sender_id = ${userID} AND receiver_id = ${ContactID}) OR (sender_id = ${ContactID} AND receiver_id = ${userID}) ORDER BY time DESC`
   return messages;
 }
 
