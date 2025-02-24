@@ -27,19 +27,20 @@ function Dashboard() {
   
   }, []);
 
-  useEffect(() => {console.log(contacts) }, [contacts]);
+  //useEffect(() => {console.log(contacts) }, [contacts]);
 
   
  
   useEffect(() => {
     const onRecieve = (newMessage) => { 
-   
+      console.log("working");
       setContacts(contacts.map(c => 
         c.id === newMessage.messagePack.sender
-            ? { ...c, messages: [...c.messages, newMessage.messagePack] } 
+            ? { ...c, messages: [newMessage.messagePack, ...c.messages] } 
             : c));
-            if(selectedContact.id === newMessage.messagePack.sender)
+            if(selectedContact.id === newMessage.messagePack.sender || selectedContact.id === newMessage.messagePack.receiver)
               {
+                console.log("working2");
                 setSelectedContact({...selectedContact, messages: [ newMessage.messagePack, ...selectedContact.messages] });
             
               };
@@ -62,7 +63,7 @@ function Dashboard() {
 
   const selectContact = (e) => {
     const contact = contacts.find((contact) => contact.id === e.target.id);
-    console.log(contact);
+   
     setSelectedContact(contact)
 
   }

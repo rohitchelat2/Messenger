@@ -29,8 +29,7 @@ function Chat({selectedContact}) {
     {
       socket.emit("sendMessage",cleanedInput , selectedContact.id);
       const newMessage = {message: cleanedInput, sender: userID, receiver: selectedContact.id, time: new Date().toISOString(), id: Math.random().toString()};
-      console.log(newMessage
-      );
+      
       setMessages([newMessage, ...messages]);
       
     setInput("");

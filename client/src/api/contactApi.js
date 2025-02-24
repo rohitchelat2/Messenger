@@ -11,7 +11,7 @@ export const API = axios.create({
 
 export const getContacts = async () => {
     try {
-        console.log("getContacts");
+        
         const response = await API.get(`/contact/get`);
         
         return response.data;
