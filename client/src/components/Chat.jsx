@@ -1,10 +1,11 @@
 // client/src/Chat.js
 import  { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
+
 //import {getMessages} from "../api/messageApi"
 import {socket} from "../Socket"
 //import Contacts from "./Contacts";
-
+const userID = localStorage.getItem("userID");
 
 
 
@@ -31,21 +32,25 @@ function Chat({selectedContact}) {
   return (
     <div>
     
-    {name}
+    {name} {selectedContact.id} {userID}
+
+
+      <div className="chat-container">
       {messages.length>0 &&
-      <div>
+      <div className="messages-container">
         {messages.map((msg, index) => (
-          <div key={index}>{msg.message} from {msg.sender}</div>
+          <div className={selectedContact.id===msg.sender?"message messages-container-right":"message"} key={index}>{msg.message}</div>
         ))}
       </div>}
       <div className="chat-input-container">
-        <input className="chat-input"
+        <input className="chat-input" required
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
         <button className="chat-input-button" onClick={sendMessage}>&#x2794;</button>
       </div>
 
+    </div>
     </div>
   );
 }

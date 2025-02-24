@@ -2,19 +2,20 @@
 //import  { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
-
+//css imports
+import ListGroup from 'react-bootstrap/ListGroup';
 
 
 
 function Contacts({contacts, selectContact}) {
   return (
-
+    <ListGroup variant="flush">
       <div>
         {contacts.map((contact, index) => (
-          <div key={index} id={contact.id} onClick={selectContact}> {contact.username}</div>
+          <ListGroup.Item className="d-flex justify-content-between align-items-start" key={index} id={contact.id} onClick={selectContact}>{contact.username}</ListGroup.Item>
         ))}
       </div>
-      
+      </ListGroup> 
    
   );
 }

@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 
+
 function Dashboard() {
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
@@ -74,6 +75,7 @@ function Dashboard() {
     <Container fluid>
       <Row>
         <Col sm={4}>
+
             <Contacts contacts={contacts} selectContact={selectContact} />
         </Col>
         <Col sm={8}>
