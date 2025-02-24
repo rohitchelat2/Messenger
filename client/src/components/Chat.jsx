@@ -9,7 +9,7 @@ const userID = localStorage.getItem("userID");
 
 
 
-function Chat({selectedContact}) {
+function Chat({selectedContact, addSentMessage}) {
   const [messages, setMessages] = useState([]);
   const [name, setName] = useState("");
 
@@ -29,7 +29,7 @@ function Chat({selectedContact}) {
     {
       socket.emit("sendMessage",cleanedInput , selectedContact.id);
       const newMessage = {message: cleanedInput, sender: userID, receiver: selectedContact.id, time: new Date().toISOString(), id: Math.random().toString()};
-      
+      addSentMessage(newMessage);
       setMessages([newMessage, ...messages]);
       
     setInput("");
@@ -67,6 +67,8 @@ Chat.propTypes = {
     messages: PropTypes.arrayOf(PropTypes.object).isRequired,
     id: PropTypes.string.isRequired
   }).isRequired
+  ,
+  addSentMessage: PropTypes.func.isRequired
 };
 
 

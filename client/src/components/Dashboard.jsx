@@ -33,40 +33,38 @@ function Dashboard() {
  
   useEffect(() => {
     const onRecieve = (newMessage) => { 
-      console.log("working");
+     
       setContacts(contacts.map(c => 
         c.id === newMessage.messagePack.sender
             ? { ...c, messages: [newMessage.messagePack, ...c.messages] } 
             : c));
-            if(selectedContact.id === newMessage.messagePack.sender || selectedContact.id === newMessage.messagePack.receiver)
+            if(selectedContact.id === newMessage.messagePack.sender )
               {
-                console.log("working2");
+                
                 setSelectedContact({...selectedContact, messages: [ newMessage.messagePack, ...selectedContact.messages] });
             
               };
     
     };
-
-
-
      socket.on("receiveMessage", onRecieve);
      return () => {
       socket.off("receiveMessage", onRecieve);
-     
    };
-  
   }, [contacts, selectedContact]);
-
-
-  
-
 
   const selectContact = (e) => {
     const contact = contacts.find((contact) => contact.id === e.target.id);
    
     setSelectedContact(contact)
-
   }
+
+
+const addSentMessage = (newMessage) => {
+  setContacts(contacts.map(c => 
+    c.id === newMessage.receiver
+        ? { ...c, messages: [newMessage, ...c.messages] } 
+        : c));};
+
 
   return (
     <Container fluid>
@@ -77,7 +75,7 @@ function Dashboard() {
         </Col>
         <Col sm={8}>
             {selectedContact &&  
-            <Chat selectedContact={selectedContact}/>}
+            <Chat selectedContact={selectedContact} addSentMessage={addSentMessage}/>}
         </Col>
       </Row>
     </Container>

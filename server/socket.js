@@ -47,7 +47,6 @@ const setupSocket = () => {
           if(response.recieverSocket)
             {
                       io.to(response.recieverSocket).emit("receiveMessage", {messagePack});}
-                      io.to(socket.id).emit("receiveMessage", {messagePack});
 
         
     });
