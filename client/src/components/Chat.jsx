@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {socket} from "../Socket"
 //import Contacts from "./Contacts";
 const userID = localStorage.getItem("userID");
-
+let prevDate = null;
 
 
 function Chat({selectedContact, addSentMessage}) {
@@ -36,7 +36,14 @@ function Chat({selectedContact, addSentMessage}) {
     }
     
   };
-
+  const checkDate = (currentDate) => {
+    if(currentDate !== prevDate){
+      prevDate = currentDate
+      return currentDate
+    }
+    else{
+      return null
+    }};
 
   return (
     <div>
@@ -46,7 +53,10 @@ function Chat({selectedContact, addSentMessage}) {
       {messages.length>0 &&
       <div className="messages-container">
         {messages.map((msg, index) => (
-          <div className={userID===msg.sender?"message messages-container-right":"message"} key={index}>{msg.message}
+          <div className={userID===msg.sender?"message messages-container-right":"message"} key={index}>
+            
+            <div className='date-line'>{checkDate(new Date(msg.time).toLocaleDateString())}</div>
+            {msg.message}
           <div className="message-time">{new Date(msg.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</div>
           </div>
         ))}
