@@ -35,10 +35,7 @@
 .messages-container::-webkit-scrollbar {
   display: none;
 }
-.messages-container-right{
-  align-items: end;
 
-}
 
 .chat-input-container{
   width: 100%;
@@ -88,6 +85,12 @@
   border-radius: .5vh;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   overflow-wrap: break-word;
-  padding: .5vh;
-  padding-left: 1vh;
+  padding: .7vh;
+  padding-left: 1.1vh;
+}
+
+.messages-container-right{
+  background-color: #cbcbcb;
+  align-self: end;
+
 }
