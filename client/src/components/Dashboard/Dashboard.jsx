@@ -1,17 +1,16 @@
 
 //import  { useState, useEffect } from "react";
 //import {getMessages} from "../api/messageApi"
-import {socket} from "../Socket"
+import {socket} from "../../Socket"
 import  { useState, useEffect } from "react";
 
-import Contacts from "./Contacts/Contacts";
-import Chat from "./Chat/Chat";
-import {getContacts} from "../api/contactApi"
+import Contacts from "../Contacts/Contacts";
+import Chat from "../Chat/Chat";
+import {getContacts} from "../../api/contactApi"
 
 //CSS imports
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
+import './Dashboard.css'
+
 
 
 function Dashboard() {
@@ -68,18 +67,18 @@ const addSentMessage = (newMessage) => {
 
 
   return (
-    <Container fluid>
-      <Row>
-        <Col className='border-right' sm={4}>
+    <div className="container-dashboard" >
+   
+        <div className='contact-column'>
 
             <Contacts contacts={contacts} selectContact={selectContact} />
-        </Col>
-        <Col sm={8}>
+        </div>
+        <div className='chat-column'>
             {selectedContact &&  
             <Chat selectedContact={selectedContact} addSentMessage={addSentMessage}/>}
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+   
   );
 }
 

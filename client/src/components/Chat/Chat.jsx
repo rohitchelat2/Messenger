@@ -54,8 +54,9 @@ function Chat({selectedContact, addSentMessage}) {
     
       <div className="chat-container">
       <div className="chat-header">{name}</div>
-      {messages.length>0 &&
       <div className="messages-container">
+      {messages.length>0 &&
+      <div className="messages">
         {Object.keys(groupedMessages).map((date) => (
           <div key={date} className="date-container"> 
           {groupedMessages[date].map((msg, index) => (
@@ -64,12 +65,15 @@ function Chat({selectedContact, addSentMessage}) {
           <div className="message-time">{new Date(msg.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</div>
           </div>
         ))}<div className="date-bubble">{date}</div>
-      </div>))}</div>}
+      </div>))}</div>}</div>
       <div className="chat-input-container">
+      <div className="chat-input-box">
+
         <input className="chat-input" value={input}  onChange={(e) => setInput(e.target.value)}  />
         <button className="chat-input-button" onClick={sendMessage}>&#x2794;</button>
       </div>
 
+    </div>
     </div>
     </div>
   );
