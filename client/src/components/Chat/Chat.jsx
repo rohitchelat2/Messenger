@@ -1,16 +1,16 @@
 // client/src/Chat.js
 import  { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-
+import './Chat.css'
 //import {getMessages} from "../api/messageApi"
-import {socket} from "../Socket"
+import {socket} from "../../Socket"
 //import Contacts from "./Contacts";
 const userID = localStorage.getItem("userID");
-let prevDate = null;
 
 
 function Chat({selectedContact, addSentMessage}) {
   const [messages, setMessages] = useState([]);
+  const [groupedMessages, setGroupedMessages] = useState([]);
   const [name, setName] = useState("");
 
   const [input, setInput] = useState("");
@@ -19,9 +19,21 @@ function Chat({selectedContact, addSentMessage}) {
   useEffect(() => {
     setName(selectedContact.username);
     setMessages(selectedContact.messages);
-
   }, [selectedContact]);
   
+  useEffect(() => {
+    const groupByDate= messages.reduce((acc, obj) => {
+      const date = new Date(obj.time).toLocaleDateString();
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(obj);
+      return acc; }, {});
+      setGroupedMessages(groupByDate);
+
+  }, [messages]);
+
+
   const sendMessage = () => {
     const cleanedInput = input.trim();
     //sendMessage(input);
@@ -36,14 +48,6 @@ function Chat({selectedContact, addSentMessage}) {
     }
     
   };
-  const checkDate = (currentDate) => {
-    if(currentDate !== prevDate){
-      prevDate = currentDate
-      return currentDate
-    }
-    else{
-      return null
-    }};
 
   return (
     <div>
@@ -52,15 +56,15 @@ function Chat({selectedContact, addSentMessage}) {
       <div className="chat-header">{name}</div>
       {messages.length>0 &&
       <div className="messages-container">
-        {messages.map((msg, index) => (
-          <div className={userID===msg.sender?"message messages-container-right":"message"} key={index}>
-            
-            <div className='date-line'>{checkDate(new Date(msg.time).toLocaleDateString())}</div>
-            {msg.message}
+        {Object.keys(groupedMessages).map((date) => (
+          <div key={date} className="date-container"> 
+          {groupedMessages[date].map((msg, index) => (
+          <div className={userID===msg.sender?"message messages-right":"message"} key={index}>
+          {msg.message}
           <div className="message-time">{new Date(msg.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</div>
           </div>
-        ))}
-      </div>}
+        ))}<div className="date-bubble">{date}</div>
+      </div>))}</div>}
       <div className="chat-input-container">
         <input className="chat-input" value={input}  onChange={(e) => setInput(e.target.value)}  />
         <button className="chat-input-button" onClick={sendMessage}>&#x2794;</button>

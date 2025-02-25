@@ -2,9 +2,10 @@
 //import  { useState, useEffect } from "react";
 //import {getMessages} from "../api/messageApi"
 import {socket} from "../Socket"
-import Contacts from "./Contacts";
 import  { useState, useEffect } from "react";
-import Chat from "./Chat";
+
+import Contacts from "./Contacts/Contacts";
+import Chat from "./Chat/Chat";
 import {getContacts} from "../api/contactApi"
 
 //CSS imports
@@ -69,7 +70,7 @@ const addSentMessage = (newMessage) => {
   return (
     <Container fluid>
       <Row>
-        <Col sm={4}>
+        <Col className='border-right' sm={4}>
 
             <Contacts contacts={contacts} selectContact={selectContact} />
         </Col>
