@@ -14,11 +14,29 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  justify-content: left;
-  align-items: left;
+  justify-content: space-between;
+  align-items: center;
   background-color: #ffffff;
-  padding: 5vh;
+  padding: 7vh;
   border-radius: 3vh;
   margin: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+.input-container{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+input{
+  width: 100%;
+  height: 5vh;
+  margin: 1vh;
+  padding: 1vh;
+  border-radius: 1vh;
+  border: 1px solid #6c6c6c;
+  background-color: #ffffff;
+  color: black;
+}
+

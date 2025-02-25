@@ -8,6 +8,7 @@ function Register() {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [rePasswordInput, setRePasswordInput] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
   const navigate = useNavigate();
 
 
@@ -26,18 +27,28 @@ function Register() {
     else{console.log("Password dosen't match")}
 
   };
+  const checkEmail = (e) => {
+    const email = e.target.value;
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&email.length>0){
+      setErrorEmail("Invalid email");
+    } else {
+      setErrorEmail("");
+    }};
 
   return (
     <div className="register-container">
       <h3>Register</h3>
-      <label>Email</label>
-      <input type="text" value={emailInput}  onChange={(e) => setEmailInput(e.target.value)}  />
-      <label>Display Name</label>
-      <input type="text" value={usernameInput}  onChange={(e) => setUsernameInput(e.target.value)}  />
-      <label>Password</label>
-      <input type="password" value={passwordInput}  onChange={(e) => setPasswordInput(e.target.value)}  />
-      <label>Re-enter Password</label>
-      <input type="password" value={rePasswordInput}  onChange={(e) => setRePasswordInput(e.target.value)}  />
+      
+      <div className="input-container">   
+        <input type="email" value={emailInput} placeholder="Email" onBlur={checkEmail} onChange={(e) => setEmailInput(e.target.value)}  /> 
+        <div style={{color: "red"}}>{errorEmail}</div>
+      </div>
+      
+      <input type="text" value={usernameInput} placeholder="Display Name" onChange={(e) => setUsernameInput(e.target.value)}  />
+      
+      <input type="password" value={passwordInput} placeholder="Password" onChange={(e) => setPasswordInput(e.target.value)}  />
+      
+      <input type="password" value={rePasswordInput} placeholder="Re-enter password" onChange={(e) => setRePasswordInput(e.target.value)}  />
 
       <button onClick={sendLoginDetails}>Register</button>
     </div>
