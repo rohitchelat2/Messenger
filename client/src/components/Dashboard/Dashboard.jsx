@@ -27,12 +27,36 @@ function Dashboard() {
   
   }, []);
 
-  //useEffect(() => {console.log(contacts) }, [contacts]);
+  useEffect(() => {if (Notification.permission === "default") {
+    Notification.requestPermission().then(permission => {
+        console.log("Notification permission:", permission);
+    });
+} }, []);
 
   
  
   useEffect(() => {
     const onRecieve = (newMessage) => { 
+      const audio = new Audio("/notification.wav");
+      audio.play();
+
+
+      if (Notification.permission === "granted") {
+        const senderName = contacts.find(c => c.id === newMessage.messagePack.sender).username;
+       const notification = new Notification("New Message", {
+            body: `${senderName}: ${newMessage.messagePack.message
+
+            }`
+        });
+          // Handle notification click event
+          notification.onclick = () => {
+            
+            window.focus(); // Bring the browser tab to focus
+          };
+    
+    }
+
+        
      
       setContacts(contacts.map(c => 
         c.id === newMessage.messagePack.sender

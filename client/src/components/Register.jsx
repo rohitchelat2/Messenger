@@ -28,10 +28,15 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="register-container">
+      <h3>Register</h3>
+      <label>Email</label>
       <input type="text" value={emailInput}  onChange={(e) => setEmailInput(e.target.value)}  />
+      <label>Display Name</label>
       <input type="text" value={usernameInput}  onChange={(e) => setUsernameInput(e.target.value)}  />
+      <label>Password</label>
       <input type="password" value={passwordInput}  onChange={(e) => setPasswordInput(e.target.value)}  />
+      <label>Re-enter Password</label>
       <input type="password" value={rePasswordInput}  onChange={(e) => setRePasswordInput(e.target.value)}  />
 
       <button onClick={sendLoginDetails}>Register</button>
