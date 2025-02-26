@@ -16,7 +16,7 @@ if (Deno.env.get("JWT_SECRET")) {
 const getContacts = async (c) => {
     const token = getCookie(c, COOKIE_KEY);
     console.log(token);
-    console.log(secret);
+ 
     const jwtPayload = await jwt.verify(token, secret);
     
     const userID = jwtPayload.id;

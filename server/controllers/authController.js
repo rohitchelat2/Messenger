@@ -78,14 +78,14 @@ const registerUser = async (c) => {
 
         // create the token by signing the payload
           const token = await jwt.sign(payload, secret);
-          console.log(new URL(c.req.url).hostname)
+          
 
           // set the token as the cookie value
           setCookie(c, COOKIE_KEY, token, {
             httpOnly: true, 
             secure: true, 
             sameSite: "None", 
-            domain: "rohitchelat-messenger-49.deno.dev",
+            domain: new URL(c.req.url).hostname,
           });
          return c.json({"username":user[0].username, "userID":user[0].id, "data" : "ok"});
         
