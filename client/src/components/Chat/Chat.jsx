@@ -36,17 +36,24 @@ function Chat({selectedContact, addSentMessage}) {
 
   const sendMessage = () => {
     const cleanedInput = input.trim();
-    //sendMessage(input);
-    if(cleanedInput !== "" )
-    {
-      socket.emit("sendMessage",cleanedInput , selectedContact.id);
-      const newMessage = {message: cleanedInput, sender: userID, receiver: selectedContact.id, time: new Date().toISOString(), id: Math.random().toString()};
+    if (cleanedInput !== "") {
+      socket.emit("sendMessage", cleanedInput, selectedContact.id);
+  
+      const newMessage = { 
+        message: cleanedInput, 
+        sender: userID, 
+        receiver: selectedContact.id, 
+        time: new Date().toISOString(), 
+        id: Math.random().toString() 
+      };
+  
       addSentMessage(newMessage);
-      setMessages([newMessage, ...messages]);
-      
-    setInput("");
+  
+      // Update messages locally
+      setMessages(prevMessages => [newMessage, ...prevMessages]);
+  
+      setInput("");
     }
-    
   };
 
   return (

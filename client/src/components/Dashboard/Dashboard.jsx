@@ -42,42 +42,38 @@ function Dashboard() {
     const onRecieve = (newMessage) => { 
       const audio = new Audio("/notification.wav");
       audio.play();
-
-
+    
       if (Notification.permission === "granted") {
-        const senderName = contacts.find(c => c.id === newMessage.messagePack.sender).username;
-       const notification = new Notification("New Message", {
-            body: `${senderName}: ${newMessage.messagePack.message
-
-            }`
+        const senderName = contacts.find(c => c.id === newMessage.messagePack.sender)?.username || "Unknown";
+        const notification = new Notification("New Message", {
+          body: `${senderName}: ${newMessage.messagePack.message}`
         });
-          // Handle notification click event
-          notification.onclick = () => {
-            
-            window.focus(); // Bring the browser tab to focus
-          };
     
-    }
-
-        
-     
-      setContacts(contacts.map(c => 
+        notification.onclick = () => window.focus(); 
+      }
+    
+      setContacts(prevContacts => prevContacts.map(c => 
         c.id === newMessage.messagePack.sender
-            ? { ...c, messages: [newMessage.messagePack, ...c.messages] } 
-            : c));
-            if(selectedContact.id === newMessage.messagePack.sender )
-              {
-                
-                setSelectedContact({...selectedContact, messages: [ newMessage.messagePack, ...selectedContact.messages] });
-            
-              };
+          ? { ...c, messages: [newMessage.messagePack, ...(c.messages || [])] }
+          : c
+      ));
     
+      setSelectedContact(prevContact => {
+        if (prevContact && prevContact.id === newMessage.messagePack.sender) {
+          return { 
+            ...prevContact, 
+            messages: [newMessage.messagePack, ...(prevContact.messages || [])]
+          };
+        }
+        return prevContact;
+      });
     };
-     socket.on("receiveMessage", onRecieve);
-     return () => {
-      socket.off("receiveMessage", onRecieve);
-   };
+    
+    socket.on("receiveMessage", onRecieve);
+    return () => socket.off("receiveMessage", onRecieve);
+  
   }, [contacts, selectedContact]);
+
 
   const selectContact = (e) => {
     const contact = contacts.find((contact) => contact.id === e.target.id);
