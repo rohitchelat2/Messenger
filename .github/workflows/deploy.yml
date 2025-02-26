@@ -27,20 +27,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
+      
+      - name: Navigate to /client directory
+        run: cd client
 
       - name: Install step
-        working-directory: ./client
         run: "npm install"
 
       - name: Build step
-        working-directory: ./client
         run: "npm run build"
 
       - name: Upload client to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "rc-messenger"
-          entrypoint: "index.html"
-          root: "client/dist"
+          entrypoint: "dist/index.html"
+          
           
           
