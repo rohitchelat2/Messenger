@@ -34,6 +34,7 @@ function Login() {
   return (
     <div className="login-container">
       <h3>Login</h3>
+      <div className="text-button"> <div>Already have an account </div><button className="small-button" onClick={()=>{navigate("/register");}}>Register</button></div>   
       <div className="input-container">
         <input type="text" value={emailInput} placeholder="Email" onChange={(e) => setEmailInput(e.target.value)}  />
       </div>

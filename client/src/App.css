@@ -28,6 +28,14 @@
   font-size: .7em;
 }
 
+.text-button{
+  display: flex;
+  width: 80%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 
 .login-container {
