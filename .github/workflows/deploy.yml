@@ -27,14 +27,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      
-      - name: Navigate to /client directory
-        run: cd client
 
       - name: Install step
+        working-directory: ./client
         run: "npm install"
 
       - name: Build step
+        working-directory: ./client
         run: "npm run build"
 
       - name: Upload client to Deno Deploy
@@ -42,6 +41,6 @@ jobs:
         with:
           project: "rc-messenger"
           entrypoint: "dist/index.html"
-          
+          root: "client"
           
           
