@@ -1,18 +1,14 @@
 // client/src/Chat.js
 //import  { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import {logout} from "../../api/logout"
+
 
 //css imports
 import './Contacts.css'
 
 
-function Contacts({contacts, selectContact}) {
-  const callLogout =async () => {
-    await logout();
-    localStorage.clear;
+function Contacts({contacts, selectContact, callLogout}) {
 
-  }
   return (
     <div className='contacts-container'>
         <div className="user-card">{localStorage.getItem("userName")} <button onClick={callLogout} className='logout-button'>Logout</button></div>
@@ -41,6 +37,7 @@ function Contacts({contacts, selectContact}) {
 Contacts.propTypes = {
   contacts: PropTypes.array.isRequired,
   selectContact: PropTypes.func.isRequired,
+  callLogout: PropTypes.func.isRequired,
 };
 
 export default Contacts;

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Contacts from "../Contacts/Contacts";
 import Chat from "../Chat/Chat";
 import {getContacts} from "../../api/contactApi"
-
+import {logout} from "../../api/userApi"
 //CSS imports
 import './Dashboard.css'
 
@@ -91,14 +91,23 @@ const addSentMessage = (newMessage) => {
     c.id === newMessage.receiver
         ? { ...c, messages: [newMessage, ...c.messages] } 
         : c));};
-
+  
+  const callLogout =async () => {
+          await logout();
+          localStorage.clear();
+          setContacts("")
+          setSelectedContact("")
+        
+          navigate("/login")
+      
+        }
 
   return (
     <div className="container-dashboard" >
    
         <div className='contact-column'>
          
-            <Contacts contacts={contacts} selectContact={selectContact} />
+            <Contacts contacts={contacts} selectContact={selectContact}  callLogout={callLogout}/>
         </div>
         <div className='chat-column'>
             {selectedContact &&  
