@@ -14,7 +14,15 @@ import {io, setupSocket} from "./socket.js"
 const app = new Hono();
 
 //middlewares
-app.use("/*", cors({origin: 'https://messenger-rc.vercel.app/', credentials: true,}));
+app.use(
+  "/*",
+  cors({
+    origin: "https://messenger-rc.vercel.app", 
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
+    allowHeaders: ["Content-Type", "Authorization"], 
+    credentials: true,
+  })
+);
 app.use("/*", logger());
 //app.use("/api/message/*", jwt({secret: secret, }));
 
