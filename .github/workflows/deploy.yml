@@ -40,7 +40,7 @@ jobs:
         if: success()
         uses: actions/deploy-pages@v4
         with:
-          branch: gh-pages  # Deployment branch
+          branch: main  # Deployment branch
           folder: ./client/dist  # Vite uses "dist" as output folder
           
           
