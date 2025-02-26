@@ -13,7 +13,7 @@ export const login = async (email, password) => {
 
     try {
         const response = await API.post(`/login`, { email, password });
-        console.log(response)
+        
         //localStorage.setItem("token", response.data.token); // Save token
         return response.data;
     } catch (error) {
@@ -24,10 +24,10 @@ export const login = async (email, password) => {
 };
 
 export const register = async (email, username, password) => {
-    console.log(email,password)
+
      try {
          const response = await API.post(`/register`, { email, username,password });
-         console.log(response.data)
+         
          return response.data;
      } catch (error) {
          throw error.response?.data || "Login failed";
@@ -35,3 +35,16 @@ export const register = async (email, username, password) => {
 
 };
 
+
+
+export const logout = async () => {
+   
+     try {
+         const response = await API.get(`/logout`);
+         
+         return response.data;
+     } catch (error) {
+         throw error.response?.data || "Logout failed";
+     }
+
+};

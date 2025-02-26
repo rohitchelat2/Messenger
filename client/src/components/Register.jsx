@@ -1,5 +1,5 @@
 
-import  { useState } from "react";
+import  { useState, useEffect } from "react";
 import {register} from "../api/userApi"
 import { useNavigate } from "react-router-dom";
 
@@ -9,8 +9,15 @@ function Register() {
   const [passwordInput, setPasswordInput] = useState("");
   const [rePasswordInput, setRePasswordInput] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
   const navigate = useNavigate();
 
+    useEffect(()=>{
+      if(localStorage.getItem("userID")){
+        navigate("/chat");
+      }
+      },[navigate]);
 
   const sendLoginDetails = async (e) => {
     e.preventDefault(); 
@@ -27,14 +34,30 @@ function Register() {
     else{console.log("Password dosen't match")}
 
   };
-  const checkEmail = (e) => {
-    const email = e.target.value;
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&email.length>0){
+  const checkEmail = () => {
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput)&&emailInput.length>0){
       setErrorEmail("Invalid email");
     } else {
       setErrorEmail("");
     }};
 
+  const checkPassword = () => {
+    if(passwordInput.length<6&&passwordInput.length>0){
+      setErrorPassword("Minimum 8 characters long");
+    } else if (passwordInput!==rePasswordInput && rePasswordInput.length>0) {
+      setErrorPassword("Passwords don't match");
+    }
+    else {
+      setErrorPassword("");
+  }};
+
+  const formValidate = () => {
+    if(errorEmail.length>0||errorPassword.length>0||emailInput.length===0||passwordInput.length===0||rePasswordInput.length===0||usernameInput.length===0){
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <div className="register-container">
       <h3>Register</h3>
@@ -44,13 +67,19 @@ function Register() {
         <div style={{color: "red"}}>{errorEmail}</div>
       </div>
       
-      <input type="text" value={usernameInput} placeholder="Display Name" onChange={(e) => setUsernameInput(e.target.value)}  />
-      
-      <input type="password" value={passwordInput} placeholder="Password" onChange={(e) => setPasswordInput(e.target.value)}  />
-      
-      <input type="password" value={rePasswordInput} placeholder="Re-enter password" onChange={(e) => setRePasswordInput(e.target.value)}  />
+      <div className="input-container">  
+        <input type="text" value={usernameInput} placeholder="Display Name" onChange={(e) => setUsernameInput(e.target.value)}  />
+      </div>
 
-      <button onClick={sendLoginDetails}>Register</button>
+      <div className="input-container">
+      <input type="password" value={passwordInput} placeholder="Password" onBlur={checkPassword} onChange={(e) => setPasswordInput(e.target.value)}  />
+      <div style={{color: "red"}}>{errorPassword}</div>
+      </div>
+      <div className="input-container">
+      <input type="password" value={rePasswordInput} placeholder="Re-enter password" onBlur={checkPassword} onChange={(e) => setRePasswordInput(e.target.value)}  />
+      
+      </div>
+      <button onClick={sendLoginDetails} disabled={formValidate()}>Register</button>
     </div>
   );
 }

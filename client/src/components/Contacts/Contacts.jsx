@@ -1,15 +1,21 @@
 // client/src/Chat.js
 //import  { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-
+import {logout} from "../../api/logout"
 
 //css imports
 import './Contacts.css'
 
 
 function Contacts({contacts, selectContact}) {
+  const callLogout =async () => {
+    await logout();
+    localStorage.clear;
+
+  }
   return (
     <div className='contacts-container'>
+        <div className="user-card">{localStorage.getItem("userName")} <button onClick={callLogout} className='logout-button'>Logout</button></div>
         {contacts.map((contact, index) => (
           <div className="contact-card" style={{cursor:"pointer"}}key={index} id={contact.id} onClick={selectContact}>
               

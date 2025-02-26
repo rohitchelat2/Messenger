@@ -3,7 +3,7 @@
 //import {getMessages} from "../api/messageApi"
 import {socket} from "../../Socket"
 import  { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import Contacts from "../Contacts/Contacts";
 import Chat from "../Chat/Chat";
 import {getContacts} from "../../api/contactApi"
@@ -16,9 +16,12 @@ import './Dashboard.css'
 function Dashboard() {
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
-  
-  useEffect(() => {
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if(localStorage.getItem("userID")===null){
+      navigate("/login")
+    }
 
     getContacts().then((data) => {
       setContacts(data);
@@ -94,7 +97,7 @@ const addSentMessage = (newMessage) => {
     <div className="container-dashboard" >
    
         <div className='contact-column'>
-
+         
             <Contacts contacts={contacts} selectContact={selectContact} />
         </div>
         <div className='chat-column'>

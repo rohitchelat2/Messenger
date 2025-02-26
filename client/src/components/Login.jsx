@@ -1,5 +1,5 @@
 
-import  { useState } from "react";
+import  { useState, useEffect } from "react";
 import {login} from "../api/userApi"
 import { useNavigate } from "react-router-dom";
 //import {socket} from "../Socket"
@@ -8,6 +8,14 @@ function Login() {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(localStorage.getItem("userID")){
+      navigate("/chat");
+    
+    
+    }
+    },[navigate]);
 
 
   const  sendLoginDetails =async (e) => {
@@ -24,9 +32,14 @@ function Login() {
   };
 
   return (
-    <div>
-      <input type="text" value={emailInput}  onChange={(e) => setEmailInput(e.target.value)}  />
-      <input type="password" value={passwordInput}  onChange={(e) => setPasswordInput(e.target.value)}  />
+    <div className="login-container">
+      <h3>Login</h3>
+      <div className="input-container">
+        <input type="text" value={emailInput} placeholder="Email" onChange={(e) => setEmailInput(e.target.value)}  />
+      </div>
+      <div className="input-container">
+        <input type="password" value={passwordInput} placeholder="Password"  onChange={(e) => setPasswordInput(e.target.value)}  />
+        </div>
 
       <button onClick={sendLoginDetails}>Login</button>
     </div>

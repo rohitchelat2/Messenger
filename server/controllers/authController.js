@@ -1,5 +1,6 @@
 import * as userService from "../services/userService.js"
 import {hash, verify } from "scrypt"
+import { z } from "https://deno.land/x/zod/mod.ts";
 import * as jwt from "@hono/hono/jwt"
 import { deleteCookie, setCookie } from '@hono/hono/cookie';
 
@@ -12,22 +13,29 @@ if (Deno.env.get("JWT_SECRET")) {
     secret = "temp";
   }
 
+
+  const userSchema = z.object({
+    username: z.string().min(3, "Username must be at least 3 characters"),
+    email: z.string().email("Invalid email format"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+  });
+
 const registerUser = async (c) => {
-
+ 
     const body = await c.req.json();
+    
     //console.log(body.email, body.username, body.password)
-   
-
-    if (!body.password||!body.email||!body.username||body.password.length<8) {
+   /* if (!body.password||!body.email||!body.username||body.password.length<8) {
       c.status(409)
       return c.json({error: "Minimum requirement not fullfilled"});
-    }
-
+    }*/
+    try {
+      userSchema.parse(body);
 
     const existingUser = await userService.findUserByEmail(body.email);
     if (existingUser.length>0) {
       c.status(409)
-      return c.json({error: "A user with the email ${body.email} already exists."});
+      return c.json({error:[{message: "A user with the email ${body.email} already exists."}]});
     }
 
     const user = {
@@ -40,7 +48,11 @@ const registerUser = async (c) => {
     await userService.createUser(user);
 
     return c.json({ data: "ok" });
-  };
+  }
+  catch (e) {
+    c.status(400)
+    return c.json({ error: e.errors });
+}};
 
 
   const loginUser = async (c) => {
@@ -79,7 +91,7 @@ const registerUser = async (c) => {
       }
 
     else{c.status(401)
-      return c.json({error: "Incorrect email ID or Password."});}
+      return c.json({error:[{message: "Incorrect login details"}]});}
   
   }
   
