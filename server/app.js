@@ -6,14 +6,7 @@ import * as messageController from "./controllers/messageController.js"
 import * as authController from "./controllers/authController.js"
 import * as contactController from "./controllers/contactController.js"
 import {io, setupSocket} from "./socket.js"
-/*import { jwt } from "@hono/hono/jwt";
-let secret;;
 
-if (Deno.env.get("JWT_SECRET")) {
-    secret = Deno.env.get("JWT_SECRET");
-  } else {
-    secret = "temp";
-  }*/
 
 
 

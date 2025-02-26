@@ -61,7 +61,7 @@ function Register() {
   return (
     <div className="register-container">
       <h3>Register</h3>
-      
+      <p>if you already have a account then <button className="small-button" onClick={()=>{navigate("/login");}}>login</button></p>      
       <div className="input-container">   
         <input type="email" value={emailInput} placeholder="Email" onBlur={checkEmail} onChange={(e) => setEmailInput(e.target.value)}  /> 
         <div style={{color: "red"}}>{errorEmail}</div>
