@@ -11,7 +11,7 @@ function Login() {
 
   useEffect(()=>{
     if(localStorage.getItem("userID")){
-      navigate("/chat");
+      navigate("/");
     
     
     }
@@ -27,7 +27,7 @@ function Login() {
     localStorage.setItem("userName", response.username);
     setEmailInput("");
     setPasswordInput("");
-    navigate("/chat");
+    navigate("/");
     }
   };
 

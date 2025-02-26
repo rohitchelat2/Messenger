@@ -81,10 +81,10 @@ const registerUser = async (c) => {
 
           // set the token as the cookie value
           setCookie(c, COOKIE_KEY, token, {
-            path: "/",
-            domain: "localhost",
-            httpOnly: true,
-            sameSite: "lax"
+            httpOnly: true, 
+            secure: true, 
+            sameSite: "None", 
+            domain: new URL(c.req.url).hostname,
           });
          return c.json({"username":user[0].username, "userID":user[0].id, "data" : "ok"});
         

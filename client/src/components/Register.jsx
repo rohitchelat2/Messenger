@@ -15,7 +15,7 @@ function Register() {
 
     useEffect(()=>{
       if(localStorage.getItem("userID")){
-        navigate("/chat");
+        navigate("/");
       }
       },[navigate]);
 

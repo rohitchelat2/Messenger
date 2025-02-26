@@ -18,7 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/chat" element={<Dashboard />} />
-        <Route path="/" element={<Register />} /> {/* Default route */}
+        <Route path="/" element={<Dashboard />} /> {/* Default route */}
       </Routes>
     </Router>
   );
