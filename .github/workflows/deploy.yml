@@ -29,16 +29,18 @@ jobs:
           node-version: lts/*
 
       - name: Install step
+        working-directory: ./client
         run: "npm install"
 
       - name: Build step
+        working-directory: ./client
         run: "npm run build"
 
-      - name: Upload to Deno Deploy
-        uses: denoland/deployctl@v1
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: actions/deploy-pages@v4
         with:
-          project: "rc-messenger"
-          entrypoint: "https://deno.land/std@0.217.0/http/file_server.ts"
-          root: "build"
+          branch: gh-pages  # Deployment branch
+          folder: ./client/dist  # Vite uses "dist" as output folder
           
           
