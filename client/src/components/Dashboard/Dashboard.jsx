@@ -97,9 +97,7 @@ const addSentMessage = (newMessage) => {
           localStorage.clear();
           setContacts("")
           setSelectedContact("")
-        
           navigate("/login")
-      
         }
 
   return (

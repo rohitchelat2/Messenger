@@ -17,7 +17,7 @@ const app = new Hono();
 app.use(
   "/*",
   cors({
-    origin: ["http://messenger-rc.vercel.app", "http://localhost:5173"],
+    origin: ["https://messenger-rc.vercel.app", "http://localhost:5173"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
     allowHeaders: ["Content-Type", "Authorization"], 
     credentials: true,
