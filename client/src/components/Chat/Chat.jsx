@@ -23,6 +23,7 @@ function Chat({selectedContact, addSentMessage}) {
   
   useEffect(() => {
     const groupByDate= messages.reduce((acc, obj) => {
+     
       const date = new Date(obj.time).toLocaleDateString();
       if (!acc[date]) {
         acc[date] = [];

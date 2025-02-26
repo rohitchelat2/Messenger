@@ -93,7 +93,7 @@ const addSentMessage = (newMessage) => {
         ? { ...c, messages: [newMessage, ...c.messages] } 
         : c));
   
-  setSelectedContact({...selectedContact, messages: [ newMessage.messagePack, ...selectedContact.messages] })
+  setSelectedContact({...selectedContact, messages: [ newMessage, ...selectedContact.messages] })
       
       
       };
