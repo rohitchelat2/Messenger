@@ -6,50 +6,18 @@
   text-align: center;
 }
 
-.register-container {
-  width: 100%;
-  height: 100%;
-  max-width: 480px;
-  max-height: 560px;
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 7vh;
-  border-radius: 3vh;
-  margin: auto;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.small-button{
-  width: 10vh;
-  height: 4vh;
-  font-size: .7em;
-}
-
-.text-button{
-  display: flex;
-  width: 80%;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
 
 .login-container {
-  width: 100%;
-  height: 100%;
-  max-width: 480px;
-  max-height: 400px;
+  width: auto;
+  height: auto;
+
   align-self: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
-  padding: 7vh;
+  padding: 4em;
   border-radius: 3vh;
   margin: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -57,26 +25,26 @@
 
 
 .input-container{
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 1em;
 }
 input{
   width: 100%;
-  height: 5vh;
+  height: auto;
   margin: 1vh;
-  padding: 1vh;
+  padding: 1em;
   border-radius: 1vh;
   border: 1px solid #6c6c6c;
   background-color: #ffffff;
   color: black;
 }
+
 button{
-
-  height: 6vh;
-
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,9 +55,31 @@ button{
   cursor: pointer;
 }
 
+
 button:disabled {
   background-color: #d2d2d2;
   color: #6c6c6c;
   cursor: not-allowed;
+}
+
+.small-button{
+  width: auto;
+  height: auto;
+  padding:1em;
+  font-size: 1em;
+  background-color: #fff;
+  color: #ff3f3f;
+  font-weight: 800;
+
+
+}
+
+.text-button{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1em;
 }
 

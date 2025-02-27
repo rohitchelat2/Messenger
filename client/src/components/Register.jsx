@@ -59,7 +59,7 @@ function Register() {
     }
   };
   return (
-    <div className="register-container">
+    <div className="login-container">
       <h3>Register</h3>
       <div className="text-button"> <div>Already have an account</div><button className="small-button" onClick={()=>{navigate("/login");}}>Login</button></div>      
       <div className="input-container">   
