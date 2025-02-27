@@ -25,7 +25,6 @@
   }
   
   .messages-container{
-    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #ffffff 8px ), repeating-linear-gradient( #d7d7d755, #d7d7d7 );
     bottom: 10vh;
     right: 0;
     width: 100%;

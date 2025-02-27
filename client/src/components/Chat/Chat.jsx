@@ -70,7 +70,7 @@ function Chat({selectedContact, addSentMessage}) {
       <div className="chat-input-container">
       <div className="chat-input-box">
 
-        <input className="chat-input" value={input}  onChange={(e) => setInput(e.target.value)}  />
+        <input className="chat-input" value={input}  onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && sendMessage()}   />
         <button className="chat-input-button" onClick={sendMessage}>&#x2794;</button>
       </div>
 
