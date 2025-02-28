@@ -4,33 +4,33 @@ This Real-Time Messenger App is a personal project designed to enhance my full-s
 Link: https://messenger-rc.vercel.app/
 
  ## Features:
-- User Authentication (Login, Registration, JWT-based authentication)
-- Real-Time Messaging (WebSockets for instant updates)
+- User Authentication 
+- Real-Time Messaging 
 - Online/Offline Status Indication
-- Secure Messaging (HTTP-only cookies & JWT for authorization)
-- Persistent Conversations (Messages stored in a database)
+- Secure Messaging 
+- Persistent Conversations
 - Notifications (Browser notifications & sound alerts for new messages)
-- Mobile-Friendly UI (Fully responsive design)
+- Mobile-Friendly UI 
 
 ## Technologies Used:
 ### Frontend:
 
-- React.js (Component-based UI)
-- React Router (Navigation & routing)
-- Axios (API requests)
-- Socket.io-client (Real-time WebSockets)
-- CSS (or TailwindCSS) (Styling & responsiveness)
+- React.js
+- React Router 
+- Axios 
+- Socket.io-client 
+- CSS
 
 ### Backend:
 - Deno + Hono 
 - Socket.io 
-- JWT & HTTP-Only Cookies (Secure authentication)
+- JWT & HTTP-Only Cookies 
 - PostgreSQL
 
 ### Deployment & DevOps:
 Deno Deploy (Backend hosting)
 Vercel (Frontend deployment)
-GitHub Actions (CI/CD pipeline for automation)
+GitHub Actions 
 
 ## Project Goal:
 The primary objective of this project is to learn by doing and meanwhile improving my portfolio.
