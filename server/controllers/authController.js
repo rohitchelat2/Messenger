@@ -83,7 +83,7 @@ const registerUser = async (c) => {
           // set the token as the cookie value
           setCookie(c, COOKIE_KEY, token, {
             httpOnly: true, 
-            secure: true, 
+            secure: false, 
             sameSite: "None", 
             domain: new URL(c.req.url).hostname,
           });
