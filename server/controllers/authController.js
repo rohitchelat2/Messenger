@@ -3,6 +3,8 @@ import {hash, verify } from "scrypt"
 import { z } from "https://deno.land/x/zod/mod.ts";
 import * as jwt from "@hono/hono/jwt"
 import { deleteCookie, setCookie } from '@hono/hono/cookie';
+import {users} from "../database/database.js"
+
 
 let secret;
 const COOKIE_KEY = "auth";
@@ -32,27 +34,34 @@ const registerUser = async (c) => {
     try {
       userSchema.parse(body);
 
-    const existingUser = await userService.findUserByEmail(body.email);
-    if (existingUser.length>0) {
-      c.status(409)
-      return c.json({error:[{message: "A user with the email ${body.email} already exists."}]});
+            
+            if (await users.findOne({email: body.email})) {
+              console.log("user exists")
+              c.status(409)
+              return c.json({error:[{message: `A user with the email ${body.email} already exists.`}]});
+            }
+              
+     }
+    catch (e) {
+      console.log(e)
+      c.status(400)
+      return c.json({ error: e.errors });
     }
-
-    const user = {
-        id: crypto.randomUUID(),
-        email: body.email,
-        username: body.username,
-        passwordHash: hash(body.password),
-      };
-    
-    await userService.createUser(user);
-
-    return c.json({ data: "ok" });
-  }
-  catch (e) {
-    c.status(400)
-    return c.json({ error: e.errors });
-}};
+const user = {
+  //id: crypto.randomUUID(),
+  email: body.email,
+  username: body.username,
+  password: hash(body.password),
+};
+try{
+await users.insertOne(user);
+return c.json({ data: "ok" });
+}
+catch (e) {
+  console.log(e)
+  c.status(400)
+  return c.json({ error: e.errors });} 
+};
 
 
   const loginUser = async (c) => {
@@ -60,20 +69,22 @@ const registerUser = async (c) => {
     const body = await c.req.json();
     const email = body.email;
     const password = body.password;
-    const user = await userService.findUserByEmail(email);
+    const user = await users.findOne({email: email})
     
-    if(user.length === 0){
+    if(!user){
       c.status(401)
-      return c.json({error: "Incorrect email ID or Password."});
+      return c.json({error: "1Incorrect email ID or Password."});
     }
-    const result = verify(password, user[0].password);
+ 
+    const result = verify(password, user.password);
  
     //if result is positive create TOKEN
     if(result){
-        
-      const payload = {
-        id: user[0].id,
-      };
+      console.log(user)
+      console.log()
+
+
+      const payload = {   id: user._id.toString()  };
   
 
         // create the token by signing the payload
@@ -87,7 +98,7 @@ const registerUser = async (c) => {
             sameSite: "None", 
             domain: new URL(c.req.url).hostname,
           });
-         return c.json({"username":user[0].username, "userID":user[0].id, "data" : "ok"});
+         return c.json({"username":user.username, "userID":user._id.toString(), "data" : "ok"});
         
       }
 
@@ -100,15 +111,9 @@ const registerUser = async (c) => {
 
 const checkUser = async (c) =>{
      const user = c.get("jwtPayload");
-     const updatedUser = await userService.findUserById(user.id);
-     if(updatedUser.length===0){return 0}
-     delete updatedUser[0].password;
-     updatedUser[0].totalAnswered= await userService.getTotalAnseredNumber(updatedUser[0].id);
-     updatedUser[0].correctAnswered= await userService.getCorrectAnseredNumber(updatedUser[0].id);
 
-      delete updatedUser[0].id;
    
-     return c.json(updatedUser[0])
+     return c.json("updatedUser[0]")
 }
 
 const logoutUser =  (c) => {

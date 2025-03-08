@@ -1,10 +1,13 @@
 import {sql} from "../database/database.js"
 
+
 const createUser = async (user) => {
     
   await sql`INSERT INTO users
   (id, email, username, password)
     VALUES (${user.id}, ${user.email}, ${user.username},${user.passwordHash})`;
+
+  
   };
   
   const findUserByEmail = async (email) => {

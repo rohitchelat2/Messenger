@@ -27,7 +27,9 @@ function Login() {
     localStorage.setItem("userName", response.username);
     setEmailInput("");
     setPasswordInput("");
+    window.location.reload(true);
     navigate("/");
+    
     }
   };
 
