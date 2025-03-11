@@ -4,6 +4,6 @@
     "postgres": "https://deno.land/x/postgresjs@v3.4.4/mod.js",
     "socket": "https://deno.land/x/socket_io/mod.ts",
     "scrypt" :  "https://deno.land/x/scrypt/mod.ts",
-    "monogo": "https://deno.land/x/mongo/mod.ts"
+    "mongo": "https://deno.land/x/mongo/mod.ts"
   }
 }

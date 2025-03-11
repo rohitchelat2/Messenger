@@ -6,28 +6,75 @@ import  { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Contacts from "../Contacts/Contacts";
 import Chat from "../Chat/Chat";
-import {getContacts} from "../../api/contactApi"
+//import {getContacts} from "../../api/contactApi"
 import {logout} from "../../api/userApi"
 //CSS imports
 import './Dashboard.css'
+import { getAllConversations } from "../../api/conversationApi";
 
 
 
 function Dashboard() {
-  const [contacts, setContacts] = useState([]);
-  const [selectedContact, setSelectedContact] = useState(null);
+ // const [contacts, setContacts] = useState([]);
+  const [conversations, setConversations] = useState([]);
+
+  const [selectedConversation, setSelectedConversation] = useState(null);
   const navigate = useNavigate();
+  const [isConnected, setIsConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState(null);
 
   useEffect(() => {
     if(localStorage.getItem("userID")===null){
       navigate("/login")
     }
-
+/*
     getContacts().then((data) => {
       setContacts(data);
-    });
-    socket.connect();
+    });*/
+
+    getAllConversations().then((data) => {console.log(data); setConversations(data);});
+    
+    
+
   
+  }, []);
+
+  useEffect(() => {
+    socket.connect();
+    // Connection established
+    socket.on("connect", () => {
+      console.log("Connected to server");
+      setIsConnected(true);
+      setConnectionError(null);
+    });
+
+    // Connection error
+    socket.on("connect_error", (error) => {
+      console.error("Connection error:", error);
+      setIsConnected(false);
+      setConnectionError(error.message);
+    });
+
+    // Disconnected
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
+      setIsConnected(false);
+    });
+
+    // Reconnected
+    socket.on("reconnect", () => {
+      console.log("Reconnected to server");
+      setIsConnected(true);
+      setConnectionError(null);
+    });
+
+    // Cleanup event listeners on unmount
+    return () => {
+      socket.off("connect");
+      socket.off("connect_error");
+      socket.off("disconnect");
+      socket.off("reconnect");
+    };
   }, []);
 
   useEffect(() => {if (Notification.permission === "default") {
@@ -42,9 +89,9 @@ function Dashboard() {
     const onRecieve = (newMessage) => { 
       const audio = new Audio("/notification.wav");
       audio.play();
+      console.log(newMessage)
 
-
-      if (Notification.permission === "granted") {
+      /* if (Notification.permission === "granted") {
         const senderName = contacts.find(c => c.id === newMessage.messagePack.sender).username;
        const notification = new Notification("New Message", {
             body: `${senderName}: ${newMessage.messagePack.message
@@ -61,7 +108,7 @@ function Dashboard() {
 
         
      
-      setContacts(contacts.map(c => 
+     setContacts(contacts.map(c => 
         c.id === newMessage.messagePack.sender
             ? { ...c, messages: [newMessage.messagePack, ...c.messages] } 
             : c));
@@ -70,30 +117,31 @@ function Dashboard() {
                 
                 setSelectedContact({...selectedContact, messages: [ newMessage.messagePack, ...selectedContact.messages] });
             
-              };
+              };*/
     
     };
      socket.on("receiveMessage", onRecieve);
      return () => {
       socket.off("receiveMessage", onRecieve);
    };
-  }, [contacts, selectedContact]);
+  }, []);
   
 
-  const selectContact = (e) => {
-    const contact = contacts.find((contact) => contact.id === e.target.id);
+  const selectConversations = (e) => {
+    const conversation = conversations.find((conversation) => conversation.id === e.target.id);
    
-    setSelectedContact(contact)
+    setSelectedConversation(conversation)
   }
 
 
 const addSentMessage = (newMessage) => {
-  setContacts(contacts.map(c => 
+  console.log(newMessage)
+ /* setContacts(contacts.map(c => 
     c.id === newMessage.receiver
         ? { ...c, messages: [newMessage, ...c.messages] } 
         : c));
   
-  setSelectedContact({...selectedContact, messages: [ newMessage, ...selectedContact.messages] })
+  setSelectedContact({...selectedContact, messages: [ newMessage, ...selectedContact.messages] })*/
       
       
       };
@@ -102,21 +150,20 @@ const addSentMessage = (newMessage) => {
           await logout();
           localStorage.clear();
           setContacts("")
-          setSelectedContact("")
+          setSelectedConversation("")
           navigate("/login")
         }
 
   return (
     <div className="container-dashboard" >
-   
-        <div className='contact-column'>
+ {/*<div className='contact-column'> 
          
-            <Contacts contacts={contacts} selectContact={selectContact}  callLogout={callLogout}/>
+            <Contacts conversations={conversations} selectConversations={selectConversations}  callLogout={callLogout}/>
         </div>
         <div className='chat-column'>
-            {selectedContact &&  
-            <Chat selectedContact={selectedContact} addSentMessage={addSentMessage}/>}
-        </div>
+            {selectedConversation &&  
+            <Chat selectedConversation={selectedConversation} addSentMessage={addSentMessage}/>}
+        </div>*/}
       </div>
    
   );

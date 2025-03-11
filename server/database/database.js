@@ -1,5 +1,5 @@
 import postgres from "postgres"
-import { MongoClient} from "monogo"
+import { MongoClient} from "mongo"
 
 const MONGODB_URI = Deno.env.get("MONGODB_URI") || "";
 const DB_NAME = Deno.env.get("DB_NAME") || "";
@@ -18,8 +18,10 @@ try {
 
 const db = client.database(DB_NAME);
 const users = db.collection("users");
+const conversations = db.collection("conversations");
 
-export { db, users };
+
+export { db, users,conversations };
 
 
 

@@ -2,7 +2,7 @@ import * as userService from "../services/userService.js"
 import {hash, verify } from "scrypt"
 import { z } from "https://deno.land/x/zod/mod.ts";
 import * as jwt from "@hono/hono/jwt"
-import { deleteCookie, setCookie } from '@hono/hono/cookie';
+import { deleteCookie, setCookie, getCookie } from '@hono/hono/cookie';
 import {users} from "../database/database.js"
 
 
@@ -80,24 +80,23 @@ catch (e) {
  
     //if result is positive create TOKEN
     if(result){
-      console.log(user)
-      console.log()
+
 
 
       const payload = {   id: user._id.toString()  };
-  
+      console.log(payload)
 
         // create the token by signing the payload
           const token = await jwt.sign(payload, secret);
-          
-
+         console.log(token) 
+     
           // set the token as the cookie value
           setCookie(c, COOKIE_KEY, token, {
             httpOnly: true, 
             secure: false, 
-            sameSite: "None", 
-            domain: new URL(c.req.url).hostname,
+            path: "/",
           });
+          console.log("Cookie set:", getCookie(c,"auth"));
          return c.json({"username":user.username, "userID":user._id.toString(), "data" : "ok"});
         
       }

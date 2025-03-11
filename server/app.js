@@ -2,8 +2,8 @@
 import { Hono } from "@hono/hono";
 import { cors } from "@hono/hono/cors";
 import { logger } from "@hono/hono/logger";
-import * as messageController from "./controllers/messageController.js"
-import * as authController from "./controllers/authController.js"
+import {getAllConversations} from "./controllers/conversationController.js"
+import {registerUser, loginUser, logoutUser} from "./controllers/authController.js"
 import * as contactController from "./controllers/contactController.js"
 import {io, setupSocket} from "./socket.js"
 
@@ -30,11 +30,11 @@ app.use("/*", logger());
 //Controllers
 
 app.get("/", (c) => c.json({ message: "Server working" }));
-app.post("/api/register", authController.registerUser);
-app.post("/api/login", authController.loginUser);
-app.get("/api/logout", authController.logoutUser);
+app.post("/api/register", registerUser);
+app.post("/api/login", loginUser);
+app.get("/api/logout", logoutUser);
 //app.get("/api/message/get", messageController.getMessages);
-app.get("/api/contact/get", contactController.getContacts);
+app.get("/api/conversation/get", getAllConversations);
 
 
 setupSocket(); //setup socket connection
